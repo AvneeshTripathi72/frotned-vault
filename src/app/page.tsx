@@ -38,7 +38,6 @@ export default function LandingPage() {
 
   return (
     <div className="flex flex-col gap-12 pb-24">
-      {/* Hero Section */}
       <section className="relative pt-24 pb-4 overflow-hidden hero-gradient">
         <div className="container mx-auto px-6">
           <div className="flex flex-col items-center text-center max-w-4xl mx-auto space-y-8 mb-12">
@@ -59,7 +58,6 @@ export default function LandingPage() {
             </motion.div>
           </div>
 
-          {/* Single Window Framing for all 5 cards */}
           <div className="max-w-[1400px] mx-auto">
             {loading ? (
               <div className="h-[400px] rounded-[2.5rem] bg-secondary animate-pulse" />
@@ -70,7 +68,6 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Simplified CTA */}
       <section className="container mx-auto px-6 max-w-5xl mt-12">
         <div className="bg-card/50 backdrop-blur-md p-8 rounded-[2rem] border border-border/40 flex flex-col md:flex-row items-center justify-between gap-8">
           <div>
@@ -79,12 +76,12 @@ export default function LandingPage() {
           </div>
           <div className="flex gap-4">
             <Link href="/explore">
-              <Button size="lg" className="rounded-xl bg-primary text-primary-foreground font-bold px-8">
+              <Button size="lg" className="rounded-xl bg-primary text-primary-foreground font-bold px-8" suppressHydrationWarning>
                 Explore All
               </Button>
             </Link>
             <Link href="/sell">
-              <Button size="lg" variant="outline" className="rounded-xl px-8">
+              <Button size="lg" variant="outline" className="rounded-xl px-8" suppressHydrationWarning>
                 Sell Prompt
               </Button>
             </Link>

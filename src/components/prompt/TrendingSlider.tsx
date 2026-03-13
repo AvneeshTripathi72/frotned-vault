@@ -40,7 +40,7 @@ export const TrendingSlider = ({ prompts }: { prompts: any[] }) => {
         </div>
 
         {/* Content Area - Dynamic auto-fill to target 5 cards */}
-        <div className="p-6 md:p-10 bg-grid-white/[0.02]">
+        <div className="p-6 md:p-10 bg-muted/5">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {displayPrompts.map((prompt, index) => (
               <motion.div
@@ -53,7 +53,7 @@ export const TrendingSlider = ({ prompts }: { prompts: any[] }) => {
                 <PromptCard 
                   id={prompt._id || prompt.id}
                   title={prompt.title || "Untitled"}
-                  tagline={prompt.tagline || ""}
+                  tagline={prompt.short_description || prompt.tagline || ""}
                   price={prompt.price || 0}
                   rating={prompt.rating || 5}
                   platform={prompt.platform || "Unknown"}

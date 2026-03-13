@@ -11,7 +11,8 @@ import { cn } from "@/lib/utils";
 interface PromptCardProps {
   id: string;
   title: string;
-  tagline: string;
+  tagline?: string;
+  short_description?: string;
   price: number;
   rating: number;
   platform: string;
@@ -28,6 +29,7 @@ export const PromptCard = ({
   id,
   title,
   tagline,
+  short_description,
   price,
   rating,
   platform,
@@ -37,6 +39,7 @@ export const PromptCard = ({
 }: PromptCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
   const [imageRatio, setImageRatio] = useState<number>(3/4); // Default fallback
+  const [imgError, setImgError] = useState(false);
 
   const handleImageLoad = (e: React.SyntheticEvent<HTMLImageElement>) => {
     const { naturalWidth, naturalHeight } = e.currentTarget;
@@ -45,7 +48,6 @@ export const PromptCard = ({
     }
   };
 
-  // 3D Tilt Effect Values
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
@@ -68,7 +70,6 @@ export const PromptCard = ({
     x.set(xPct);
     y.set(yPct);
     
-    // Set raw mouse position for glow effect
     mouseXRaw.set(mouseX);
     mouseYRaw.set(mouseY);
   };
@@ -104,7 +105,6 @@ export const PromptCard = ({
     >
       <Link href={`/prompt/${id}`} className="block h-full">
         <Card className="glass-card h-full overflow-hidden rounded-2xl flex flex-col border-border/40 bg-card/60 backdrop-blur-xl transition-all duration-300 relative">
-          {/* Global Card Blurred Background (Integrated color matching) */}
           {previewImage && (
             <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
               <img 
@@ -116,14 +116,22 @@ export const PromptCard = ({
             </div>
           )}
 
-          {/* Dynamic Glow Overlay */}
           <motion.div 
             className="absolute inset-0 z-10 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300"
             style={{ background: glow }}
           />
           
-          {/* Image Section - Static 1:1 Aspect Ratio with Color-Matched Blur BG */}
-          <div className="relative aspect-square overflow-hidden z-20">
+          <div className="relative aspect-square bg-muted/30 overflow-hidden z-20">
+            {previewImage && (
+              <div className="absolute inset-0 z-0">
+                <img 
+                  src={previewImage} 
+                  alt="" 
+                  className="w-full h-full object-cover blur-3xl scale-125 opacity-40 brightness-75 transition-transform duration-700"
+                />
+              </div>
+            )}
+
             <AnimatePresence mode="wait">
               {isHovered && (
                 <motion.div
@@ -164,6 +172,8 @@ export const PromptCard = ({
             </div>
           </div>
 
+
+
           {/* Content Section - Transparent to show matching blur */}
           <div className="p-4 flex flex-col gap-3 flex-grow relative z-20">
             <div className="space-y-1">
@@ -175,22 +185,31 @@ export const PromptCard = ({
                 </div>
               </div>
               <p className="text-[12px] text-muted-foreground line-clamp-1 font-medium opacity-80">
-                {tagline}
+                {short_description || tagline}
               </p>
             </div>
 
             <div className="mt-auto flex justify-between items-center pt-3 border-t border-border/20">
               <div className="flex items-center gap-2">
-                <div className="w-6 h-6 rounded-full bg-secondary/50 overflow-hidden border border-border/50 flex items-center justify-center">
-                  {author.avatar ? (
-                    <img src={author.avatar} alt={author.username} className="w-full h-full object-cover" />
+                <div className="w-6 h-6 rounded-full bg-primary/20 overflow-hidden border border-border/50 flex items-center justify-center">
+                  {author.avatar && !imgError ? (
+                    <img 
+                      src={author.avatar} 
+                      alt="" 
+                      className="w-full h-full object-cover" 
+                      onError={() => setImgError(true)}
+                    />
                   ) : (
-                    <span className="text-[8px] font-bold opacity-30">{author.username[0]}</span>
+                    <span className="text-[10px] font-black text-primary uppercase">
+                      {(author.username?.[0] || 'U').toUpperCase()}
+                    </span>
                   )}
                 </div>
                 <span className="text-[11px] font-semibold text-muted-foreground hover:text-foreground transition-colors">@{author.username}</span>
               </div>
-              <span className="text-[15px] font-black text-primary italic">₹{price}</span>
+              <div className="flex items-center bg-primary/10 px-3 py-1.5 rounded-xl border border-primary/20 shadow-sm shadow-primary/5 group-hover:bg-primary group-hover:border-primary transition-all duration-300">
+                <span className="text-[14px] font-black text-primary group-hover:text-white transition-colors tracking-tighter italic">₹{price}</span>
+              </div>
             </div>
           </div>
         </Card>

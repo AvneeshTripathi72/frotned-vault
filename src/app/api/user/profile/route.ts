@@ -1,26 +1,56 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/mongodb';
 import User from '@/models/User';
-import Prompt from '@/models/Prompt'; // Register the model
+import Prompt from '@/models/Prompt';
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
     await connectDB();
-    let user = await User.findOne({ username: 'Global_Engineer' }).populate('purchasedPrompts');
     
+    const authToken = req.cookies.get('auth_token')?.value;
+    
+    if (!authToken) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const user = await User.findOne({ username: authToken }).populate('purchasedPrompts');
+
     if (!user) {
-      user = await User.create({
-        username: 'Global_Engineer',
-        coins: 1000,
-        avatar: 'https://avatar.iran.liara.run/public/boy?username=Global_Engineer'
-      });
-      // Re-query to get populated if newly created
-      user = await User.findOne({ username: 'Global_Engineer' }).populate('purchasedPrompts');
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
     
     return NextResponse.json(user);
   } catch (error: any) {
     console.error("Profile API error:", error);
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+}
+
+export async function PUT(req: NextRequest) {
+  try {
+    await connectDB();
+    
+    // Security check: Only update the logged in user
+    const authToken = req.cookies.get('auth_token')?.value;
+    if (!authToken) {
+      return NextResponse.json({ error: "Unauthorized access" }, { status: 401 });
+    }
+
+    const body = await req.json();
+    
+    const user = await User.findOneAndUpdate(
+      { username: authToken },
+      { $set: body },
+      { new: true }
+    );
+
+    if (!user) {
+      return NextResponse.json({ error: "Identity not recognized" }, { status: 404 });
+    }
+
+    return NextResponse.json(user);
+  } catch (error: any) {
+    console.error("Profile Update error:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

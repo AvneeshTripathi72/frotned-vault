@@ -78,9 +78,6 @@ function ExploreContent() {
     fetchPrompts();
   }, [q, priceRange, activeCategory, selectedPlatforms, minRating, sortBy, currentPage]);
 
-  const paginatedPrompts = prompts;
-
-
   const togglePlatform = (platform: string) => {
     setSelectedPlatforms(prev => 
       prev.includes(platform) ? prev.filter(p => p !== platform) : [...prev, platform]
@@ -97,7 +94,7 @@ function ExploreContent() {
   };
 
   return (
-    <div className="container mx-auto px-6 py-8 max-w-[1400px]">
+    <div className="container mx-auto px-6 py-8 max-w-[1400px]" suppressHydrationWarning>
       <div className="space-y-10">
         <div className="flex flex-col md:flex-row justify-between items-end gap-6 pb-6 border-b border-border">
           <div className="space-y-1">
@@ -116,6 +113,7 @@ function ExploreContent() {
                     value={cat}
                     className="rounded-md data-[state=active]:bg-primary data-[state=active]:text-primary-foreground px-5 font-bold text-[11px] uppercase tracking-wider transition-all"
                     onClick={() => setActiveCategory(cat)}
+                    suppressHydrationWarning
                   >
                     {cat}
                   </TabsTrigger>
@@ -131,6 +129,7 @@ function ExploreContent() {
                 "h-10 rounded-lg px-5 gap-2 font-bold text-[11px] uppercase tracking-widest border-border",
                 showFilters ? "bg-primary/5 text-primary border-primary/30" : "bg-background text-foreground hover:bg-muted"
               )}
+              suppressHydrationWarning
             >
               <SlidersHorizontal className="w-3.5 h-3.5" /> 
               Filters
@@ -202,7 +201,7 @@ function ExploreContent() {
                   <div className="flex gap-2">
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button variant="outline" className="h-9 rounded-lg bg-background border-border/40 gap-2 font-bold px-4 flex-grow text-[10px] uppercase tracking-wider">
+                        <Button variant="outline" className="h-9 rounded-lg bg-background border-border/40 gap-2 font-bold px-4 flex-grow text-[10px] uppercase tracking-wider" suppressHydrationWarning>
                           {sortBy} <ChevronDown className="w-3 h-3 text-primary" />
                         </Button>
                       </DropdownMenuTrigger>
@@ -227,7 +226,7 @@ function ExploreContent() {
               <div key={i} className="h-[400px] rounded-[2.5rem] bg-secondary animate-pulse border border-border" />
             ))
           ) : (
-            paginatedPrompts.map((prompt: any, index: number) => (
+            prompts.map((prompt: any, index: number) => (
               <motion.div 
                 key={prompt._id || prompt.id} 
                 className="h-full"
@@ -238,7 +237,7 @@ function ExploreContent() {
                 <PromptCard 
                   id={prompt._id || prompt.id}
                   title={prompt.title || "Untitled Prompt"}
-                  tagline={prompt.tagline || ""}
+                  tagline={prompt.short_description || prompt.tagline || ""}
                   price={prompt.price || 0}
                   rating={prompt.rating || 5}
                   platform={prompt.platform || "Unknown"}
@@ -256,8 +255,6 @@ function ExploreContent() {
           )}
         </div>
 
-
-        
         {totalItems === 0 && (
           <div className="flex flex-col items-center justify-center py-40 text-center space-y-4">
             <Search className="w-16 h-16 text-muted-foreground/20" />

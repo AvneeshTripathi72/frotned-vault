@@ -57,6 +57,7 @@ export const Sidebar = () => {
                 ? "bg-primary/10 text-primary shadow-sm" 
                 : "text-card-foreground hover:bg-secondary hover:text-foreground dark:hover:bg-primary/5 dark:hover:text-primary"
             )}
+            suppressHydrationWarning
           >
             {pathname === item.href && (
               <motion.div 

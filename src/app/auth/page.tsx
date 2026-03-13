@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Github, Mail, Chrome, ArrowRight, Sparkles, Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -15,20 +15,45 @@ export default function AuthPage() {
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
 
-  const handleAuth = (e: React.FormEvent) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
+
+  const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Setting a fake token cookie
-    document.cookie = "auth_token=mock_session_token; path=/; max-age=86400";
-    toast.success(`${isLogin ? 'Welcome back!' : 'Account created!'}`);
     
-    // Refresh and redirect
-    setTimeout(() => {
-      window.location.href = "/";
-    }, 1000);
+    if (!email || !password || (!isLogin && !username)) {
+      toast.error("Please fill in all mandatory fields");
+      return;
+    }
+
+    try {
+      const res = await fetch("/api/auth", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password, username, isLogin })
+      });
+
+      const data = await res.json();
+      
+      if (!res.ok) {
+        toast.error(data.error || "Authentication failed");
+        return;
+      }
+
+      toast.success(`${isLogin ? 'Welcome back!' : 'Account created!'}`);
+      
+      // Refresh and redirect
+      setTimeout(() => {
+        window.location.href = "/profile";
+      }, 1000);
+    } catch (err: any) {
+      toast.error("Connection failed");
+    }
   };
 
   return (
-    <div className="min-h-[90vh] flex items-center justify-center p-4 relative overflow-hidden bg-background">
+    <div className="min-h-[90vh] flex items-center justify-center p-4 relative overflow-hidden bg-background" suppressHydrationWarning>
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-30">
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/10 blur-[120px] rounded-full" />
         <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-primary/10 blur-[120px] rounded-full" />
@@ -50,10 +75,10 @@ export default function AuthPage() {
           </div>
 
           <div className="space-y-4">
-            <Button variant="outline" className="w-full h-12 rounded-xl border-border/40 bg-secondary gap-3 font-black uppercase tracking-widest text-[9px] hover:bg-muted transition-all shadow-sm">
+            <Button variant="outline" className="w-full h-12 rounded-xl border-border/40 bg-secondary gap-3 font-black uppercase tracking-widest text-[9px] hover:bg-muted transition-all shadow-sm" suppressHydrationWarning>
               <Github className="w-4 h-4 text-primary" /> Continue with GitHub
             </Button>
-            <Button variant="outline" className="w-full h-12 rounded-xl border-border/40 bg-secondary gap-3 font-black uppercase tracking-widest text-[9px] hover:bg-muted transition-all shadow-sm">
+            <Button variant="outline" className="w-full h-12 rounded-xl border-border/40 bg-secondary gap-3 font-black uppercase tracking-widest text-[9px] hover:bg-muted transition-all shadow-sm" suppressHydrationWarning>
               <Chrome className="w-4 h-4 text-primary" /> Continue with Google
             </Button>
           </div>
@@ -65,33 +90,74 @@ export default function AuthPage() {
           </div>
 
           <form onSubmit={handleAuth} className="space-y-6">
+            <AnimatePresence mode="wait">
+              {!isLogin && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  className="space-y-2 overflow-hidden"
+                >
+                  <label className="text-[10px] font-black text-muted-foreground/60 uppercase ml-1 tracking-widest">
+                    Username <span className="text-primary">*</span>
+                  </label>
+                  <Input 
+                    type="text" 
+                    placeholder="Global_Engineer" 
+                    className="h-12 bg-secondary border-border/40 rounded-xl px-4 font-bold focus:ring-2 focus:ring-primary/20"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    required
+                    suppressHydrationWarning
+                  />
+                </motion.div>
+              )}
+            </AnimatePresence>
+
             <div className="space-y-2">
-              <label className="text-[10px] font-black text-muted-foreground/60 uppercase ml-1 tracking-widest">Email Address</label>
+              <label className="text-[10px] font-black text-muted-foreground/60 uppercase ml-1 tracking-widest">
+                Email Address <span className="text-primary">*</span>
+              </label>
               <Input 
                 type="email" 
                 placeholder="engineer@logic.network" 
-                className="h-12 bg-secondary border-border/40 rounded-xl px-4 font-bold"
+                className="h-12 bg-secondary border-border/40 rounded-xl px-4 font-bold focus:ring-2 focus:ring-primary/20"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                suppressHydrationWarning
               />
             </div>
             <div className="space-y-2 relative">
-              <label className="text-[10px] font-black text-muted-foreground/60 uppercase ml-1 tracking-widest">Password</label>
+              <label className="text-[10px] font-black text-muted-foreground/60 uppercase ml-1 tracking-widest">
+                Password <span className="text-primary">*</span>
+              </label>
               <div className="relative">
                 <Input 
                   type={showPassword ? "text" : "password"} 
                   placeholder="••••••••" 
-                  className="h-12 bg-secondary border-border/40 rounded-xl px-4 pr-12 font-bold"
+                  className="h-12 bg-secondary border-border/40 rounded-xl px-4 pr-12 font-bold focus:ring-2 focus:ring-primary/20"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  suppressHydrationWarning
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-primary transition-colors"
+                  suppressHydrationWarning
                 >
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
               </div>
             </div>
             
-            <Button className="w-full h-14 rounded-2xl font-black uppercase tracking-[0.2em] text-xs bg-primary text-white shadow-lg shadow-primary/20 transition-all hover:scale-105 active:scale-95 duration-300 mt-4">
+            <Button 
+              type="submit"
+              className="w-full h-14 rounded-2xl font-black uppercase tracking-[0.2em] text-xs bg-primary text-white shadow-lg shadow-primary/20 transition-all hover:scale-105 active:scale-95 duration-300 mt-4" 
+              suppressHydrationWarning
+            >
               {isLogin ? "Sign In" : "Get Started"} <ArrowRight className="ml-2 w-4 h-4" />
             </Button>
           </form>
@@ -101,6 +167,7 @@ export default function AuthPage() {
             <button 
               onClick={() => setIsLogin(!isLogin)} 
               className="text-primary font-black hover:underline uppercase tracking-widest decoration-2"
+              suppressHydrationWarning
             >
               {isLogin ? "Sign up free" : "Login here"}
             </button>

@@ -2,34 +2,27 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 export function middleware(request: NextRequest) {
-  const path = request.nextUrl.pathname;
-  
-  // Define public paths that don't require authentication
-  const isPublicPath = path === '/auth';
-  
-  // Get the token from cookies
-  const token = request.cookies.get('auth_token')?.value || '';
+  const authToken = request.cookies.get('auth_token')?.value;
+  const { pathname } = request.nextUrl;
 
-  // Redirect to /auth if not logged in and trying to access private path
-  if (!isPublicPath && !token) {
-    return NextResponse.redirect(new URL('/auth', request.nextUrl));
+  if (
+    pathname.startsWith('/auth') || 
+    pathname.startsWith('/api/auth') ||
+    pathname.includes('.') || 
+    pathname.startsWith('/_next')
+  ) {
+    return NextResponse.next();
   }
 
-  // Redirect to home if logged in and trying to access /auth
-  if (isPublicPath && token) {
-    return NextResponse.redirect(new URL('/', request.nextUrl));
+  if (!authToken) {
+    return NextResponse.redirect(new URL('/auth', request.url));
   }
+
+  return NextResponse.next();
 }
 
-// See "Matching Paths" below to learn more
 export const config = {
   matcher: [
-    '/',
-    '/explore/:path*',
-    '/sell/:path*',
-    '/dashboard/:path*',
-    '/u/:path*',
-    '/wallet/:path*',
-    '/auth',
+    '/((?!api|_next/static|_next/image|favicon.ico).*)',
   ],
 };

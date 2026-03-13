@@ -3,7 +3,6 @@ import connectDB from '@/lib/mongodb';
 import Prompt from '@/models/Prompt';
 import { unstable_cache, revalidateTag } from 'next/cache';
 
-// Low-level caching for prompts with dynamic keys
 const getCachedPrompts = (query: any, sort: any, skip: number, limit: number) => 
   unstable_cache(
     async () => {
@@ -34,13 +33,18 @@ export async function POST(req: NextRequest) {
       seller: body.seller || 'anonymous',
     });
 
-    // Invalidate the 'prompts' cache tag
-    revalidateTag('prompts', 'default');
+    revalidateTag('prompts', 'page');
 
     return NextResponse.json(prompt, { status: 201 });
   } catch (error: any) {
-    console.error('Error creating prompt:', error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    console.error('Error creating prompt:', error.message);
+    
+    if (error.name === 'ValidationError') {
+      const messages = Object.values(error.errors).map((err: any) => err.message);
+      return NextResponse.json({ error: `Validation Error: ${messages.join(', ')}` }, { status: 400 });
+    }
+
+    return NextResponse.json({ error: error.message || 'Server error' }, { status: 500 });
   }
 }
 
@@ -68,7 +72,7 @@ export async function GET(req: NextRequest) {
     if (q) {
       query.$or = [
         { title: { $regex: q, $options: 'i' } },
-        { tagline: { $regex: q, $options: 'i' } }
+        { short_description: { $regex: q, $options: 'i' } }
       ];
     }
     if (category && category !== 'All') query.category = { $regex: new RegExp(`^${category}$`, 'i') };
