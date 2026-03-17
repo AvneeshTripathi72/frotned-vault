@@ -18,8 +18,7 @@ export async function GET(req: NextRequest) {
     const avgRating = prompts.length > 0 
       ? prompts.reduce((acc, p) => acc + (p.rating || 0), 0) / prompts.length 
       : 0;
-    
-    // Top sellers
+  
     const topSellers = [...prompts]
       .sort((a, b) => (b.sales || 0) - (a.sales || 0))
       .slice(0, 5)
@@ -27,7 +26,7 @@ export async function GET(req: NextRequest) {
         id: p._id,
         name: p.title,
         sales: p.sales || 0,
-        views: `${(p.sales || 0) * 12}k`, // Mocked views based on sales
+        views: `${(p.sales || 0) * 12}k`,
         cr: `${((p.sales || 0) / ((p.sales || 0) * 12 + 1) * 100).toFixed(2)}%`,
         revenue: `₹${((p.sales || 0) * (p.price || 0)).toLocaleString()}`
       }));
