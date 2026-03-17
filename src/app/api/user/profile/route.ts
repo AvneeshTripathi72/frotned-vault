@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/mongodb';
 import User from '@/models/User';
-import Prompt from '@/models/Prompt';
 
 export async function GET(req: NextRequest) {
   try {

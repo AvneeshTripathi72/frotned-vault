@@ -28,7 +28,6 @@ export async function POST(req: NextRequest) {
     await connectDB();
     const body = await req.json();
     
-    // Basic server-side validation
     const requiredFields = ['title', 'short_description', 'full_description', 'prompt_text', 'category', 'prompt_type', 'models', 'output_type', 'difficulty', 'price'];
     for (const field of requiredFields) {
       if (!body[field]) {

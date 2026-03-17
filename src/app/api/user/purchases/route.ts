@@ -3,10 +3,10 @@ import connectDB from '@/lib/mongodb';
 import User from '@/models/User';
 import Prompt from '@/models/Prompt';
 
-export async function GET(req: NextRequest) {
+export async function GET(_req: NextRequest) {
   try {
     await connectDB();
-    const { searchParams } = new URL(req.url);
+    const { searchParams } = new URL(_req.url);
     const page = parseInt(searchParams.get('page') || '1');
     const limit = parseInt(searchParams.get('limit') || '9');
     const skip = (page - 1) * limit;

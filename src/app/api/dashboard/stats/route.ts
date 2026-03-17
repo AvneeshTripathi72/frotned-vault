@@ -2,15 +2,11 @@ import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/mongodb';
 import Prompt from '@/models/Prompt';
 
-export async function GET(req: NextRequest) {
+export async function GET(_req: NextRequest) {
   try {
     await connectDB();
     
-    // In a real app, filter by the logged-in user
-    // const sellerId = "avneesh"; 
-    // const prompts = await Prompt.find({ seller: sellerId });
     
-    // For now, let's show prompts belonging to Global_Engineer
     const prompts = await Prompt.find({ seller: 'Global_Engineer' }).lean();
     
     const totalSales = prompts.reduce((acc, p) => acc + (p.sales || 0), 0);
@@ -31,7 +27,6 @@ export async function GET(req: NextRequest) {
         revenue: `₹${((p.sales || 0) * (p.price || 0)).toLocaleString()}`
       }));
 
-    // Mocking chart data based on real volume
     const dailyData = [
       { name: "Day 1", sales: Math.round(totalRevenue * 0.1) },
       { name: "Day 5", sales: Math.round(totalRevenue * 0.15) },
