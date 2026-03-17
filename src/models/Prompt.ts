@@ -9,7 +9,7 @@ const PromptSchema = new Schema({
   platform: { type: String, default: 'OpenAI' },
   category: { type: String, required: true },
   subcategory: { type: String },
-  use_case: { type: String, required: true },
+  use_case: { type: String },
   prompt_type: { 
     type: String, 
     required: true, 
@@ -45,6 +45,12 @@ const PromptSchema = new Schema({
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
 });
+
+// Add indices to speed up queries by these fields
+PromptSchema.index({ seller: 1 });
+PromptSchema.index({ category: 1 });
+PromptSchema.index({ platform: 1 });
+PromptSchema.index({ createdAt: -1 });
 
 const Prompt = models.Prompt || model('Prompt', PromptSchema);
 export default Prompt;

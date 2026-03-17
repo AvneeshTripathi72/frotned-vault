@@ -28,6 +28,18 @@ export async function POST(req: NextRequest) {
     await connectDB();
     const body = await req.json();
     
+    // Basic server-side validation
+    const requiredFields = ['title', 'short_description', 'full_description', 'prompt_text', 'category', 'prompt_type', 'models', 'output_type', 'difficulty', 'price'];
+    for (const field of requiredFields) {
+      if (!body[field]) {
+        return NextResponse.json({ error: `Missing required field: ${field}` }, { status: 400 });
+      }
+    }
+
+    if (typeof body.price !== 'number' || body.price < 0) {
+      return NextResponse.json({ error: 'Price must be a positive number' }, { status: 400 });
+    }
+    
     const prompt = await Prompt.create({
       ...body,
       seller: body.seller || 'anonymous',

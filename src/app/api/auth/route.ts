@@ -1,11 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/mongodb';
 import User from '@/models/User';
+import bcrypt from 'bcryptjs';
 
 export async function POST(req: NextRequest) {
   try {
     await connectDB();
-    const { username, email, isLogin } = await req.json();
+    const { username, email, password, isLogin } = await req.json();
 
     let user;
     if (isLogin) {
@@ -13,15 +14,23 @@ export async function POST(req: NextRequest) {
       if (!user) {
         return NextResponse.json({ error: "Identity not found" }, { status: 404 });
       }
+      
+      const isMatch = await bcrypt.compare(password, user.password);
+      if (!isMatch) {
+        return NextResponse.json({ error: "Invalid credentials" }, { status: 401 });
+      }
     } else {
       const existingUser = await User.findOne({ $or: [{ email }, { username }] });
       if (existingUser) {
         return NextResponse.json({ error: "Identity already exists" }, { status: 400 });
       }
 
+      const hashedPassword = await bcrypt.hash(password, 12);
+
       user = await User.create({
         username,
         email,
+        password: hashedPassword,
         fullName: username,
         clerkId: `user_${Date.now()}_${username}`,
         steamId: `steam_${Date.now()}_${username}`,

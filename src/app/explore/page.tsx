@@ -3,7 +3,7 @@
 import { useState, useEffect, Suspense } from "react";
 import { SlidersHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
 import { useSearchParams } from "next/navigation";
 import { FilterPanel } from "./components/FilterPanel";
@@ -69,19 +69,23 @@ function ExploreContent() {
           </div>
           
           <div className="flex flex-wrap items-center gap-3">
-            <Tabs value={activeCategory} className="w-full sm:w-fit">
+            <Tabs value={activeCategory} onValueChange={setActiveCategory} className="w-full sm:w-fit">
               <TabsList className="bg-secondary border border-border p-1 h-10 rounded-lg flex overflow-x-auto scrollbar-hide">
                 {CATEGORIES.map((cat) => (
                   <TabsTrigger 
                     key={cat} 
                     value={cat}
                     className="rounded-md data-[state=active]:bg-primary data-[state=active]:text-primary-foreground px-5 font-bold text-[11px] uppercase tracking-wider transition-all"
-                    onClick={() => setActiveCategory(cat)}
                   >
                     {cat}
                   </TabsTrigger>
                 ))}
               </TabsList>
+              {CATEGORIES.map((cat) => (
+                <div key={`content-${cat}`} className="hidden">
+                  <TabsContent value={cat} />
+                </div>
+              ))}
             </Tabs>
             
             <Button 

@@ -14,13 +14,14 @@ if (!cached) {
 
 async function connectDB() {
   if (cached.conn) {
-    console.log("Using cached MongoDB connection");
     return cached.conn;
   }
 
   if (!cached.promise) {
     const opts = {
       bufferCommands: false,
+      maxPoolSize: 10,
+      serverSelectionTimeoutMS: 5000,
     };
 
     console.log("Connecting to MongoDB...");
@@ -29,9 +30,12 @@ async function connectDB() {
       return mongoose;
     }).catch(err => {
       console.error("MongoDB connection failed:", err);
+      // Reset promise to allow retries
+      cached.promise = null;
       throw err;
     });
   }
+  
   cached.conn = await cached.promise;
   return cached.conn;
 }

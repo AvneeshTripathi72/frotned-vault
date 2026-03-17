@@ -11,7 +11,7 @@ export async function GET(req: NextRequest) {
     // const prompts = await Prompt.find({ seller: sellerId });
     
     // For now, let's show prompts belonging to Global_Engineer
-    const prompts = await Prompt.find({ seller: 'Global_Engineer' });
+    const prompts = await Prompt.find({ seller: 'Global_Engineer' }).lean();
     
     const totalSales = prompts.reduce((acc, p) => acc + (p.sales || 0), 0);
     const totalRevenue = prompts.reduce((acc, p) => acc + ((p.sales || 0) * (p.price || 0)), 0);

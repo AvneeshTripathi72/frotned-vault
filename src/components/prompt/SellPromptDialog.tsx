@@ -108,7 +108,14 @@ export function SellPromptForm({ onSuccess }: { onSuccess?: () => void }) {
         }),
       });
 
-      if (!response.ok) throw new Error("Deployment failed");
+      if (!response.ok) {
+        let errMsg = "Deployment failed";
+        try {
+          const errData = await response.json();
+          if (errData.error) errMsg = errData.error;
+        } catch (e) {}
+        throw new Error(errMsg);
+      }
 
       confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
       toast.success("Prompt Deployed!");

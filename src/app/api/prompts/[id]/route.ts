@@ -39,7 +39,7 @@ export async function DELETE(
     const { id } = await params;
     await connectDB();
     
-    const prompt = await Prompt.findById(id);
+    const prompt = await Prompt.findById(id).lean();
     if (!prompt) return NextResponse.json({ error: 'Prompt not found' }, { status: 404 });
 
     // For now, allow Global_Engineer
@@ -63,14 +63,14 @@ export async function PUT(
     const body = await req.json();
     await connectDB();
 
-    const prompt = await Prompt.findById(id);
+    const prompt = await Prompt.findById(id).lean();
     if (!prompt) return NextResponse.json({ error: 'Prompt not found' }, { status: 404 });
 
     if (prompt.seller !== 'Global_Engineer') {
       return NextResponse.json({ error: 'You do not have permission to edit this prompt' }, { status: 403 });
     }
 
-    const updatedPrompt = await Prompt.findByIdAndUpdate(id, body, { new: true });
+    const updatedPrompt = await Prompt.findByIdAndUpdate(id, body, { new: true }).lean();
     return NextResponse.json(updatedPrompt);
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
