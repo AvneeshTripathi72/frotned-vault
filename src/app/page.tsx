@@ -12,6 +12,9 @@ import { Footer } from "@/components/Footer";
 import { useEffect, useState } from "react";
 import { PromptRow } from "@/components/home/PromptRow";
 import { AIModelFilter } from "@/components/home/AIModelFilter";
+import { ProfessionSection } from "@/components/home/ProfessionSection";
+import { CategoryGrid } from "@/components/home/CategoryGrid";
+import { GuidePackages } from "@/components/home/GuidePackages";
 
 export default function LandingPage() {
   const [prompts, setPrompts] = useState<any[]>([]);
@@ -20,7 +23,7 @@ export default function LandingPage() {
   useEffect(() => {
     const fetchPrompts = async () => {
       try {
-        const res = await fetch("/api/prompts?limit=8&sortBy=Most Purchased");
+        const res = await fetch("/api/prompts?limit=12&sortBy=Most Purchased");
         const data = await res.json();
         if (data && Array.isArray(data.prompts)) {
           setPrompts(data.prompts);
@@ -49,6 +52,18 @@ export default function LandingPage() {
   
   const youtubePrompts = prompts.length > 0 ? prompts.slice(0, 4) : Array(4).fill({ 
     title: "Hook Gen Title Boost", tagline: "Maximum CTR title and description gen", price: 149, rating: 4.7, platform: "ChatGPT 4", seller: "TubeMaster" 
+  });
+
+  const mixedPrompts = Array(5).fill({ 
+    title: "Strategic Asset Architect", tagline: "High-level content engineering", price: 249, rating: 4.8, platform: "Claude 3", seller: "Strategist" 
+  }).map((p, i) => ({
+    ...p,
+    title: i % 2 === 0 ? "LinkedIn Growth Protocol" : "SEO Dominance Blueprint",
+    tagline: i % 2 === 0 ? "LinkedIn Prompt" : "SEO Prompt",
+  }));
+
+  const softwareDevPrompts = Array(4).fill({ 
+    title: "Bug Sniper Pro", tagline: "Advanced debugging and logic fixes", price: 349, rating: 4.9, platform: "GitHub Copilot", seller: "DevOpsElite" 
   });
 
   return (
@@ -84,7 +99,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* New Sections */}
+      {/* Previously added sections */}
       <PromptRow 
         title="Image Transformation" 
         prompts={imageTransformPrompts} 
@@ -100,11 +115,31 @@ export default function LandingPage() {
 
       <AIModelFilter />
 
+      {/* NEW SECTIONS BEGIN */}
       <PromptRow 
         title="YouTube Content Forge" 
         prompts={youtubePrompts} 
         href="/explore" 
       />
+
+      <PromptRow 
+        title="Mixed Intelligence" 
+        prompts={mixedPrompts} 
+        href="/explore" 
+      />
+
+      {/* Professional Focused Section */}
+      <ProfessionSection />
+
+      <PromptRow 
+        title="Software Development Prompts" 
+        prompts={softwareDevPrompts} 
+        href="/explore" 
+      />
+
+      <CategoryGrid />
+
+      <GuidePackages />
 
       {/* Simplified CTA */}
       <section className="container mx-auto px-6 max-w-5xl mt-12">
