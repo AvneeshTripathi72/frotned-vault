@@ -10,6 +10,8 @@ import { ArrowRight, Sparkles, Zap, Shield, Wallet, Star, Flame, ChevronRight } 
 import { TrendingSlider } from "@/components/prompt/TrendingSlider";
 import { Footer } from "@/components/Footer";
 import { useEffect, useState } from "react";
+import { PromptRow } from "@/components/home/PromptRow";
+import { AIModelFilter } from "@/components/home/AIModelFilter";
 
 export default function LandingPage() {
   const [prompts, setPrompts] = useState<any[]>([]);
@@ -36,8 +38,21 @@ export default function LandingPage() {
     fetchPrompts();
   }, []);
 
+  // Mock data for new sections
+  const imageTransformPrompts = prompts.length > 0 ? prompts.slice(0, 5) : Array(5).fill({ 
+    title: "Realistic Portrait FX", tagline: "Ultra-detailed skin and lighting", price: 299, rating: 4.8, platform: "Midjourney", seller: "Visionary" 
+  });
+  
+  const instagramPrompts = prompts.length > 0 ? prompts.slice(0, 5) : Array(5).fill({ 
+    title: "Viral Aesthetic Reel", tagline: "High-engagement visual storytelling", price: 199, rating: 4.9, platform: "Stable Diffusion", seller: "Creatorhub" 
+  });
+  
+  const youtubePrompts = prompts.length > 0 ? prompts.slice(0, 4) : Array(4).fill({ 
+    title: "Hook Gen Title Boost", tagline: "Maximum CTR title and description gen", price: 149, rating: 4.7, platform: "ChatGPT 4", seller: "TubeMaster" 
+  });
+
   return (
-    <div className="flex flex-col gap-12 pb-24">
+    <div className="flex flex-col gap-24 pb-24">
       {/* Hero Section */}
       <section className="relative pt-24 pb-4 overflow-hidden hero-gradient">
         <div className="container mx-auto px-6">
@@ -59,7 +74,6 @@ export default function LandingPage() {
             </motion.div>
           </div>
 
-          {/* Single Window Framing for all 5 cards */}
           <div className="max-w-[1400px] mx-auto">
             {loading ? (
               <div className="h-[400px] rounded-[2.5rem] bg-secondary animate-pulse" />
@@ -69,6 +83,28 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
+
+      {/* New Sections */}
+      <PromptRow 
+        title="Image Transformation" 
+        prompts={imageTransformPrompts} 
+        href="/explore" 
+      />
+
+      <PromptRow 
+        title="Instagram Prompts" 
+        subtitle={["Reel", "AI Avatar", "Post"]} 
+        prompts={instagramPrompts} 
+        href="/explore" 
+      />
+
+      <AIModelFilter />
+
+      <PromptRow 
+        title="YouTube Content Forge" 
+        prompts={youtubePrompts} 
+        href="/explore" 
+      />
 
       {/* Simplified CTA */}
       <section className="container mx-auto px-6 max-w-5xl mt-12">
@@ -93,6 +129,5 @@ export default function LandingPage() {
         <Footer />
       </section>
     </div>
-
   );
 }

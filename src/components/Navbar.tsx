@@ -86,6 +86,7 @@ export const Navbar = () => {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               onKeyDown={handleSearch}
+              suppressHydrationWarning
               className="pl-10 h-10 bg-white dark:bg-[#181824] border-border rounded-xl focus:ring-primary/20 focus:border-primary transition-all text-sm font-medium text-[#111827] dark:text-white"
             />
           </div>
