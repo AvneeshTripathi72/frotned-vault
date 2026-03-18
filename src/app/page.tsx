@@ -72,38 +72,7 @@ export default function LandingPage() {
   });
 
   return (
-    <div className="flex flex-col gap-24 pb-24">
-      {/* Hero Section */}
-      <section className="relative pt-24 pb-4 overflow-hidden hero-gradient">
-        <div className="container mx-auto px-6">
-          <div className="flex flex-col items-center text-center max-w-4xl mx-auto space-y-8 mb-12">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="space-y-4"
-            >
-              <Badge className="bg-primary/10 text-primary border-primary/20 px-4 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest">
-                The Elite Prompt Marketplace
-              </Badge>
-              <h1 className="text-6xl md:text-7xl font-black tracking-tight leading-[0.9] text-foreground">
-                Engineered <span className="text-primary italic">Intelligence</span>
-              </h1>
-              <p className="text-lg text-card-foreground font-medium max-w-2xl mx-auto leading-relaxed">
-                High-performance prompts crafted by leading AI engineers. 
-              </p>
-            </motion.div>
-          </div>
-
-          <div className="max-w-[1400px] mx-auto">
-            {loading ? (
-              <div className="h-[400px] rounded-[2.5rem] bg-secondary animate-pulse" />
-            ) : (
-              <TrendingSlider prompts={prompts} />
-            )}
-          </div>
-        </div>
-      </section>
-
+    <div className="flex flex-col gap-24 pb-24 pt-24">
       {/* Row Sections */}
       <PromptRow 
         title="Image Transformation" 
