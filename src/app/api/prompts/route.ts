@@ -3,7 +3,7 @@ import connectDB from '@/lib/mongodb';
 import Prompt from '@/models/Prompt';
 import { unstable_cache, revalidateTag } from 'next/cache';
 
-// Low-level caching for prompts with dynamic keys
+
 const getCachedPrompts = (query: any, sort: any, skip: number, limit: number) => 
   unstable_cache(
     async () => {
