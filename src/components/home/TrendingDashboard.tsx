@@ -62,12 +62,25 @@ export const TrendingDashboard = () => {
                     transition={{ delay: j * 0.05 }}
                     className="min-w-[200px] p-4 rounded-2xl bg-white/5 border border-white/10 hover:border-primary/50 transition-all cursor-pointer group snap-start"
                   >
-                    <div className="aspect-video rounded-lg bg-white/5 mb-3 overflow-hidden relative">
-                        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <div className="aspect-[16/10] rounded-2xl bg-muted/50 mb-4 overflow-hidden relative border border-white/5 shadow-inner">
+                        <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-black/40 opacity-40 group-hover:opacity-60 transition-opacity duration-700" />
+                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_0%,_rgba(0,0,0,0.5)_100%)]" />
+                        
+                        {/* Status Badge */}
+                        <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 group-hover:translate-y-0">
+                           <div className="size-6 rounded-lg bg-primary/20 backdrop-blur-md border border-primary/30 flex items-center justify-center text-primary">
+                              <Zap size={10} className="fill-primary" />
+                           </div>
+                        </div>
                     </div>
-                    <div className="space-y-1">
-                       <h4 className="text-sm font-bold text-white group-hover:text-primary transition-colors">{p.title}</h4>
-                       <p className="text-[10px] text-muted-foreground line-clamp-1">{p.desc}</p>
+                    
+                    <div className="space-y-2 px-1">
+                       <h4 className="text-xs font-black tracking-tight text-white group-hover:text-primary transition-colors leading-tight">
+                        {p.title}
+                       </h4>
+                       <p className="text-[10px] font-medium text-muted-foreground/60 line-clamp-2 leading-relaxed group-hover:text-muted-foreground transition-colors">
+                        {p.desc}
+                       </p>
                     </div>
                   </motion.div>
                 ))}

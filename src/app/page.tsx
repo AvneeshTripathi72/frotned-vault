@@ -3,12 +3,8 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { PromptCard } from "@/components/prompt/PromptCard";
-import { ArrowRight, Sparkles, Zap, Shield, Wallet, Star, Flame, ChevronRight, Heart } from "lucide-react";
-import { TrendingSlider } from "@/components/prompt/TrendingSlider";
-import { Footer } from "@/components/Footer";
+import { ChevronRight, Heart } from "lucide-react";
 import { useEffect, useState } from "react";
 import { PromptRow } from "@/components/home/PromptRow";
 import { AIModelFilter } from "@/components/home/AIModelFilter";
