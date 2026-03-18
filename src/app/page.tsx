@@ -18,6 +18,8 @@ import { GuidePackages } from "@/components/home/GuidePackages";
 import { PackageGrid } from "@/components/home/PackageGrid";
 import { TrendingDashboard } from "@/components/home/TrendingDashboard";
 import { TopContributors } from "@/components/home/TopContributors";
+import { FavouritesGrid } from "@/components/home/FavouritesGrid";
+import { HomeFooter } from "@/components/home/HomeFooter";
 
 export default function LandingPage() {
   const [prompts, setPrompts] = useState<any[]>([]);
@@ -142,46 +144,49 @@ export default function LandingPage() {
 
       <GuidePackages />
 
-      {/* NEWEST SECTIONS (STEP 3) */}
       <PackageGrid />
 
       <TrendingDashboard />
 
       <TopContributors />
 
-      {/* Favourites Heading */}
-      <section className="container mx-auto px-6 space-y-6">
-        <div className="space-y-1">
-          <h2 className="text-3xl font-black tracking-tight text-foreground flex items-center gap-4">
-            Favourites <Heart size={24} className="text-primary fill-primary/20 animate-pulse" />
-          </h2>
-          <div className="h-1 w-12 bg-primary rounded-full opacity-50" />
-        </div>
-        <p className="text-muted-foreground font-medium text-sm">Your personally architected preference collection.</p>
-      </section>
+      {/* Favourites Section */}
+      <div className="space-y-12">
+        <section className="container mx-auto px-6 space-y-6">
+          <div className="space-y-1">
+            <h2 className="text-3xl font-black tracking-tight text-foreground flex items-center gap-4">
+              Favourites <Heart size={24} className="text-primary fill-primary/20 animate-pulse" />
+            </h2>
+            <div className="h-1 w-12 bg-primary rounded-full opacity-50" />
+          </div>
+          <p className="text-muted-foreground font-medium text-sm">Your personally architected preference collection.</p>
+        </section>
 
-      {/* Simplified CTA */}
-      <section className="container mx-auto px-6 max-w-5xl mt-12">
-        <div className="bg-card/50 backdrop-blur-md p-8 rounded-[2rem] border border-border/40 flex flex-col md:flex-row items-center justify-between gap-8">
+        {loading ? (
+          <div className="container mx-auto px-6 h-64 bg-secondary animate-pulse rounded-3xl" />
+        ) : (
+          <FavouritesGrid prompts={prompts} />
+        )}
+      </div>
+
+      {/* Simplified CTA & New HomeFooter */}
+      <section className="container mx-auto px-6 max-w-5xl mt-12 bg-card/10 backdrop-blur-md p-1 rounded-[2.5rem] border border-border/10 overflow-hidden">
+        <div className="bg-card/40 backdrop-blur-md p-8 md:p-12 text-center md:text-left rounded-[2.5rem] flex flex-col md:flex-row items-center justify-between gap-8">
           <div>
-            <h2 className="text-2xl font-black tracking-tight">Ready to Engineer <span className="text-primary">the Future?</span></h2>
-            <p className="text-muted-foreground font-medium text-sm">Join the leading creators and monetize your prompt architectures.</p>
+            <h2 className="text-3xl font-black tracking-tight">Ready to Engineer <span className="text-primary">the Future?</span></h2>
+            <p className="text-muted-foreground font-bold tracking-tight text-[11px] uppercase mt-2">Join elite creators & monetize your prompt architectures.</p>
           </div>
           <div className="flex gap-4">
             <Link href="/explore">
-              <Button size="lg" className="rounded-xl bg-primary text-primary-foreground font-bold px-8">
+              <Button size="lg" className="rounded-2xl px-10">
                 Explore All
-              </Button>
-            </Link>
-            <Link href="/sell">
-              <Button size="lg" variant="outline" className="rounded-xl px-8">
-                Sell Prompt
               </Button>
             </Link>
           </div>
         </div>
-        <Footer />
       </section>
+
+      <HomeFooter />
     </div>
   );
 }
