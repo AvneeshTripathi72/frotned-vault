@@ -207,9 +207,9 @@ export default function WalletPage() {
                       {row.amount > 0 ? `+${row.amount}` : row.amount}
                     </TableCell>
                     <TableCell className="text-right pr-10">
-                      <span className="inline-flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest text-emerald-500">
+                      <div className="inline-flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest text-emerald-500">
                         <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" /> {row.status}
-                      </span>
+                      </div>
                     </TableCell>
                   </TableRow>
                 ))}

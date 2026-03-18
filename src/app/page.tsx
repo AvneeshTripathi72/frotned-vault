@@ -143,13 +143,8 @@ export default function LandingPage() {
           </div>
           <div className="flex gap-4">
             <Link href="/explore">
-              <Button size="lg" className="rounded-2xl bg-primary text-primary-foreground font-bold px-10" suppressHydrationWarning>
+              <Button size="lg" className="rounded-2xl px-10">
                 Explore All
-              </Button>
-            </Link>
-            <Link href="/sell">
-              <Button size="lg" variant="outline" className="rounded-2xl px-10" suppressHydrationWarning>
-                Sell Prompt
               </Button>
             </Link>
           </div>

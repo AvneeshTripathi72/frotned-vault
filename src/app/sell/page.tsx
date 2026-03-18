@@ -17,7 +17,6 @@ export default function SellPromptPage() {
         </div>
 
         <div className="glass-card p-10 rounded-[2.5rem] border-border/40 bg-card shadow-xl relative overflow-hidden">
-           {/* Decorative background branding */}
            <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2" />
            <SellPromptForm />
         </div>

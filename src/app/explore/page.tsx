@@ -1,26 +1,16 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Search, SlidersHorizontal, ChevronDown, Star, ChevronLeft, ChevronRight } from "lucide-react";
-import { Input } from "@/components/ui/input";
+import { useState, useEffect, Suspense } from "react";
+import { SlidersHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Slider } from "@/components/ui/slider";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { PromptCard } from "@/components/prompt/PromptCard";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Check, X } from "lucide-react";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
 import { useSearchParams } from "next/navigation";
-import { useEffect, Suspense } from "react";
+import { FilterPanel } from "./components/FilterPanel";
+import { PromptGrid } from "./components/PromptGrid";
+import { AnimatePresence } from "framer-motion";
 
 const CATEGORIES = ["All", "Marketing", "Development", "Design", "Writing"];
-const PLATFORMS = ["ChatGPT", "Midjourney", "Claude", "Stable Diffusion"];
 
 function ExploreContent() {
   const searchParams = useSearchParams();
@@ -36,8 +26,6 @@ function ExploreContent() {
   const ITEMS_PER_PAGE = 50;
 
   const [prompts, setPrompts] = useState<any[]>([]);
-  const [totalItems, setTotalItems] = useState(0);
-  const [totalPages, setTotalPages] = useState(0);
   const [loading, setLoading] = useState(true);
 
   const fetchPrompts = async () => {
@@ -57,16 +45,7 @@ function ExploreContent() {
 
       const res = await fetch(`/api/prompts?${params.toString()}`);
       const data = await res.json();
-      
-      if (data.prompts) {
-        setPrompts(data.prompts);
-        setTotalItems(data.total);
-        setTotalPages(data.totalPages);
-      } else {
-        setPrompts([]);
-        setTotalItems(0);
-        setTotalPages(0);
-      }
+      setPrompts(data.prompts || []);
     } catch (error) {
       console.error("Failed to fetch prompts:", error);
     } finally {
@@ -78,23 +57,8 @@ function ExploreContent() {
     fetchPrompts();
   }, [q, priceRange, activeCategory, selectedPlatforms, minRating, sortBy, currentPage]);
 
-  const togglePlatform = (platform: string) => {
-    setSelectedPlatforms(prev => 
-      prev.includes(platform) ? prev.filter(p => p !== platform) : [...prev, platform]
-    );
-  };
-
-  const handleReset = () => {
-    setPriceRange([0, 1000]);
-    setActiveCategory("All");
-    setSelectedPlatforms([]);
-    setMinRating(null);
-    setSortBy("Newest First");
-    setCurrentPage(1);
-  };
-
   return (
-    <div className="container mx-auto px-6 py-8 max-w-[1400px]" suppressHydrationWarning>
+    <div className="container mx-auto px-6 py-8 max-w-[1400px]">
       <div className="space-y-10">
         <div className="flex flex-col md:flex-row justify-between items-end gap-6 pb-6 border-b border-border">
           <div className="space-y-1">
@@ -105,20 +69,23 @@ function ExploreContent() {
           </div>
           
           <div className="flex flex-wrap items-center gap-3">
-            <Tabs value={activeCategory} className="w-full sm:w-fit">
+            <Tabs value={activeCategory} onValueChange={setActiveCategory} className="w-full sm:w-fit">
               <TabsList className="bg-secondary border border-border p-1 h-10 rounded-lg flex overflow-x-auto scrollbar-hide">
                 {CATEGORIES.map((cat) => (
                   <TabsTrigger 
                     key={cat} 
                     value={cat}
                     className="rounded-md data-[state=active]:bg-primary data-[state=active]:text-primary-foreground px-5 font-bold text-[11px] uppercase tracking-wider transition-all"
-                    onClick={() => setActiveCategory(cat)}
-                    suppressHydrationWarning
                   >
                     {cat}
                   </TabsTrigger>
                 ))}
               </TabsList>
+              {CATEGORIES.map((cat) => (
+                <div key={`content-${cat}`} className="hidden">
+                  <TabsContent value={cat} />
+                </div>
+              ))}
             </Tabs>
             
             <Button 
@@ -129,154 +96,35 @@ function ExploreContent() {
                 "h-10 rounded-lg px-5 gap-2 font-bold text-[11px] uppercase tracking-widest border-border",
                 showFilters ? "bg-primary/5 text-primary border-primary/30" : "bg-background text-foreground hover:bg-muted"
               )}
-              suppressHydrationWarning
             >
-              <SlidersHorizontal className="w-3.5 h-3.5" /> 
-              Filters
+              <SlidersHorizontal className="w-3.5 h-3.5" /> Filters
             </Button>
           </div>
         </div>
 
         <AnimatePresence>
-          {showFilters && (
-            <motion.div
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: "auto", opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              className="overflow-hidden bg-secondary p-8 rounded-2xl border border-border"
-            >
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-                {/* ... existing filters ... */}
-                <div className="space-y-4">
-                  <label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground opacity-60">Platform</label>
-                  <div className="grid grid-cols-2 gap-2">
-                    {PLATFORMS.map((platform) => (
-                      <Button
-                        key={platform}
-                        variant="outline"
-                        size="sm"
-                        className={cn(
-                          "rounded-lg h-9 border-border/40 font-bold text-[10px] uppercase tracking-wider transition-all",
-                          selectedPlatforms.includes(platform) ? "bg-primary text-white border-primary" : "bg-background hover:bg-muted"
-                        )}
-                        onClick={() => togglePlatform(platform)}
-                      >
-                        {platform}
-                      </Button>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="space-y-6">
-                  <label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground opacity-60">Price Range</label>
-                  <Slider value={priceRange} max={1000} step={10} onValueChange={setPriceRange} className="py-2" />
-                  <div className="flex justify-between text-[11px] font-bold text-muted-foreground">
-                    <span>₹{priceRange[0]}</span>
-                    <span>₹{priceRange[1]}</span>
-                  </div>
-                </div>
-
-                <div className="space-y-4">
-                  <label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground opacity-60">Min Rating</label>
-                  <div className="flex gap-2">
-                    {[4, 3, 2, 1].map((rating) => (
-                      <Button
-                        key={rating}
-                        variant="outline"
-                        size="sm"
-                        className={cn(
-                          "rounded-lg h-9 flex-grow border-border/40 font-bold text-xs",
-                          minRating === rating ? "bg-primary text-white border-primary" : "bg-background hover:bg-muted"
-                        )}
-                        onClick={() => setMinRating(minRating === rating ? null : rating)}
-                      >
-                        {rating}★
-                      </Button>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="space-y-4">
-                  <label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground opacity-60">Sort Direction</label>
-                  <div className="flex gap-2">
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="outline" className="h-9 rounded-lg bg-background border-border/40 gap-2 font-bold px-4 flex-grow text-[10px] uppercase tracking-wider" suppressHydrationWarning>
-                          {sortBy} <ChevronDown className="w-3 h-3 text-primary" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent className="p-1 rounded-lg border-border/40 min-w-[200px]">
-                        {["Newest First", "Price: Low to High", "Price: High to Low", "Most Purchased"].map((option) => (
-                          <DropdownMenuItem key={option} className="text-[10px] font-bold uppercase tracking-wider p-2 cursor-pointer" onClick={() => setSortBy(option)}>
-                            {option}
-                          </DropdownMenuItem>
-                        ))}
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          )}
+          <FilterPanel 
+            show={showFilters}
+            priceRange={priceRange}
+            setPriceRange={setPriceRange}
+            selectedPlatforms={selectedPlatforms}
+            togglePlatform={(p) => setSelectedPlatforms(prev => prev.includes(p) ? prev.filter(x => x !== p) : [...prev, p])}
+            minRating={minRating}
+            setMinRating={setMinRating}
+            sortBy={sortBy}
+            setSortBy={setSortBy}
+          />
         </AnimatePresence>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {loading ? (
-            Array.from({ length: 10 }).map((_, i) => (
-              <div key={i} className="h-[400px] rounded-[2.5rem] bg-secondary animate-pulse border border-border" />
-            ))
-          ) : (
-            prompts.map((prompt: any, index: number) => (
-              <motion.div 
-                key={prompt._id || prompt.id} 
-                className="h-full"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: (index % 12) * 0.05 }}
-              >
-                <PromptCard 
-                  id={prompt._id || prompt.id}
-                  title={prompt.title || "Untitled Prompt"}
-                  tagline={prompt.short_description || prompt.tagline || ""}
-                  price={prompt.price || 0}
-                  rating={prompt.rating || 5}
-                  platform={prompt.platform || "Unknown"}
-                  author={{
-                    username: typeof prompt.seller === 'object' ? (prompt.seller.name || prompt.seller.username || "anonymous") : (prompt.seller || "anonymous"),
-                    avatar: (prompt.seller && typeof prompt.seller === 'object' && prompt.seller.avatar) 
-                      ? prompt.seller.avatar 
-                      : `https://avatar.iran.liara.run/public/boy?username=${typeof prompt.seller === 'object' ? (prompt.seller.name || prompt.seller.username || "anonymous") : (prompt.seller || "anonymous")}`
-                  }}
-                  previewImage={prompt.images?.[0] || ""}
-                  promptPreview={prompt.promptText?.substring(0, 80) || ""}
-                />
-              </motion.div>
-            ))
-          )}
-        </div>
-
-        {totalItems === 0 && (
-          <div className="flex flex-col items-center justify-center py-40 text-center space-y-4">
-            <Search className="w-16 h-16 text-muted-foreground/20" />
-            <div className="space-y-1">
-              <p className="text-2xl font-black text-foreground">No matches found</p>
-              <p className="text-muted-foreground font-medium">Try broadening your search or resetting filters.</p>
-            </div>
-          </div>
-        )}
+        <PromptGrid prompts={prompts} loading={loading} />
       </div>
     </div>
-
   );
 }
 
 export default function ExplorePage() {
   return (
-    <Suspense fallback={
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin" />
-      </div>
-    }>
+    <Suspense fallback={<div className="flex items-center justify-center min-h-screen"><div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin" /></div>}>
       <ExploreContent />
     </Suspense>
   );

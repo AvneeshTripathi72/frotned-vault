@@ -40,6 +40,7 @@ function Badge({
       data-slot="badge"
       data-variant={variant}
       className={cn(badgeVariants({ variant }), className)}
+      suppressHydrationWarning
       {...props}
     />
   )

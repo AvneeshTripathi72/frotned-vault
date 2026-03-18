@@ -29,6 +29,17 @@ export async function POST(req: NextRequest) {
     await connectDB();
     const body = await req.json();
     
+    const requiredFields = ['title', 'short_description', 'full_description', 'prompt_text', 'category', 'prompt_type', 'models', 'output_type', 'difficulty', 'price'];
+    for (const field of requiredFields) {
+      if (!body[field]) {
+        return NextResponse.json({ error: `Missing required field: ${field}` }, { status: 400 });
+      }
+    }
+
+    if (typeof body.price !== 'number' || body.price < 0) {
+      return NextResponse.json({ error: 'Price must be a positive number' }, { status: 400 });
+    }
+    
     const prompt = await Prompt.create({
       ...body,
       seller: body.seller || 'anonymous',
@@ -53,12 +64,10 @@ export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
     
-    // Pagination params
     const page = parseInt(searchParams.get('page') || '1');
     const limit = parseInt(searchParams.get('limit') || '10');
     const skip = (page - 1) * limit;
 
-    // Filter params
     const q = searchParams.get('q') || '';
     const category = searchParams.get('category');
     const platform = searchParams.get('platform');
@@ -68,7 +77,6 @@ export async function GET(req: NextRequest) {
     const seller = searchParams.get('seller');
     const sortBy = searchParams.get('sortBy') || 'Newest First';
 
-    // Build Query
     const query: any = {};
     if (q) {
       query.$or = [
@@ -91,13 +99,11 @@ export async function GET(req: NextRequest) {
     }
     if (minRating) query.rating = { $gte: Number(minRating) };
 
-    // Sort Mapping
     let sort: any = { createdAt: -1 };
     if (sortBy === 'Price: Low to High') sort = { price: 1 };
     if (sortBy === 'Price: High to Low') sort = { price: -1 };
     if (sortBy === 'Most Purchased') sort = { sales: -1 };
 
-    // Execute with caching
     const [prompts, total] = await Promise.all([
       getCachedPrompts(query, sort, skip, limit),
       getCachedCount(query)

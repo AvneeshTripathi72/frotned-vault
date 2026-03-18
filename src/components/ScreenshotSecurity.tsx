@@ -8,6 +8,16 @@ export const ScreenshotSecurity = ({ children }: { children: React.ReactNode }) 
   const [isRestricted, setIsRestricted] = useState(false);
 
   useEffect(() => {
+    const clearClipboard = async () => {
+      try {
+        if (typeof navigator !== 'undefined' && navigator.clipboard && document.hasFocus()) {
+          await navigator.clipboard.writeText("");
+        }
+      } catch (err) {
+        // Silently skip
+      }
+    };
+
     const handleContextMenu = (e: MouseEvent) => {
       e.preventDefault();
       toast.error("Security Policy: Right-click is restricted on this platform.", {
@@ -17,7 +27,7 @@ export const ScreenshotSecurity = ({ children }: { children: React.ReactNode }) 
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'PrintScreen' || e.keyCode === 44) {
-        navigator.clipboard.writeText("");
+        clearClipboard();
         setIsRestricted(true);
         toast.error("Security Breach: Screenshots are prohibited.");
       }
@@ -37,7 +47,7 @@ export const ScreenshotSecurity = ({ children }: { children: React.ReactNode }) 
     const handleVisibilityChange = () => {
       if (document.visibilityState === 'hidden') {
         setIsRestricted(true);
-        navigator.clipboard.writeText("");
+        clearClipboard();
       } else {
         setTimeout(() => setIsRestricted(false), 300);
       }
@@ -47,7 +57,7 @@ export const ScreenshotSecurity = ({ children }: { children: React.ReactNode }) 
     const handleMouseEnter = () => setIsRestricted(false);
     const handleWindowBlur = () => {
       setIsRestricted(true);
-      navigator.clipboard.writeText("");
+      clearClipboard();
     };
     const handleWindowFocus = () => setIsRestricted(false);
 

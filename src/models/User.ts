@@ -1,9 +1,10 @@
-import mongoose, { Schema, model, models } from 'mongoose';
+import { Schema, model, models } from 'mongoose';
 
 const UserSchema = new Schema({
   username: { type: String, required: true, unique: true },
   fullName: { type: String },
-  email: { type: String },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
   avatar: { type: String },
   bio: { type: String },
   role: { type: String, default: "Prompt Engineer" },
