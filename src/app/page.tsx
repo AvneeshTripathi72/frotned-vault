@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { PromptCard } from "@/components/prompt/PromptCard";
-import { ArrowRight, Sparkles, Zap, Shield, Wallet, Star, Flame, ChevronRight } from "lucide-react";
+import { ArrowRight, Sparkles, Zap, Shield, Wallet, Star, Flame, ChevronRight, Heart } from "lucide-react";
 import { TrendingSlider } from "@/components/prompt/TrendingSlider";
 import { Footer } from "@/components/Footer";
 import { useEffect, useState } from "react";
@@ -15,6 +15,9 @@ import { AIModelFilter } from "@/components/home/AIModelFilter";
 import { ProfessionSection } from "@/components/home/ProfessionSection";
 import { CategoryGrid } from "@/components/home/CategoryGrid";
 import { GuidePackages } from "@/components/home/GuidePackages";
+import { PackageGrid } from "@/components/home/PackageGrid";
+import { TrendingDashboard } from "@/components/home/TrendingDashboard";
+import { TopContributors } from "@/components/home/TopContributors";
 
 export default function LandingPage() {
   const [prompts, setPrompts] = useState<any[]>([]);
@@ -99,7 +102,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Previously added sections */}
+      {/* Row Sections */}
       <PromptRow 
         title="Image Transformation" 
         prompts={imageTransformPrompts} 
@@ -115,7 +118,6 @@ export default function LandingPage() {
 
       <AIModelFilter />
 
-      {/* NEW SECTIONS BEGIN */}
       <PromptRow 
         title="YouTube Content Forge" 
         prompts={youtubePrompts} 
@@ -128,7 +130,6 @@ export default function LandingPage() {
         href="/explore" 
       />
 
-      {/* Professional Focused Section */}
       <ProfessionSection />
 
       <PromptRow 
@@ -140,6 +141,24 @@ export default function LandingPage() {
       <CategoryGrid />
 
       <GuidePackages />
+
+      {/* NEWEST SECTIONS (STEP 3) */}
+      <PackageGrid />
+
+      <TrendingDashboard />
+
+      <TopContributors />
+
+      {/* Favourites Heading */}
+      <section className="container mx-auto px-6 space-y-6">
+        <div className="space-y-1">
+          <h2 className="text-3xl font-black tracking-tight text-foreground flex items-center gap-4">
+            Favourites <Heart size={24} className="text-primary fill-primary/20 animate-pulse" />
+          </h2>
+          <div className="h-1 w-12 bg-primary rounded-full opacity-50" />
+        </div>
+        <p className="text-muted-foreground font-medium text-sm">Your personally architected preference collection.</p>
+      </section>
 
       {/* Simplified CTA */}
       <section className="container mx-auto px-6 max-w-5xl mt-12">
