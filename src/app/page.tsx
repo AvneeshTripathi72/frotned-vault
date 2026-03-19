@@ -125,7 +125,7 @@ export default function LandingPage() {
 
       <PackageGrid />
 
-      <TrendingDashboard />
+      <TrendingDashboard prompts={prompts} />
 
       <TopContributors />
 

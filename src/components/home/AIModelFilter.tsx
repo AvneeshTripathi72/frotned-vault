@@ -4,16 +4,16 @@ import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 const models = [
-  { name: "ChatGPT", image: "https://logo.clearbit.com/openai.com", color: "#10a37f" },
-  { name: "Midjourney", image: "https://logo.clearbit.com/midjourney.com", color: "#AC8BF6" },
-  { name: "Claude", image: "https://logo.clearbit.com/anthropic.com", color: "#d97757" },
-  { name: "Stable Diffusion", image: "https://logo.clearbit.com/stability.ai", color: "#3B82F6" },
-  { name: "DALL-E", image: "https://logo.clearbit.com/openai.com", color: "#F59E0B" },
-  { name: "Llama", image: "https://logo.clearbit.com/meta.com", color: "#8B5CF6" },
-  { name: "Copilot", image: "https://logo.clearbit.com/github.com", color: "#0EA5E9" },
-  { name: "Gemini", image: "https://logo.clearbit.com/google.com", color: "#4F46E5" },
-  { name: "Sora", image: "https://logo.clearbit.com/openai.com", color: "#E11D48" },
-  { name: "Perplexity", image: "https://logo.clearbit.com/perplexity.ai", color: "#06B6D4" },
+  { name: "ChatGPT", image: "https://www.google.com/s2/favicons?domain=openai.com&sz=128", color: "#10a37f" },
+  { name: "Midjourney", image: "https://www.google.com/s2/favicons?domain=midjourney.com&sz=128", color: "#AC8BF6" },
+  { name: "Claude", image: "https://www.google.com/s2/favicons?domain=anthropic.com&sz=128", color: "#d97757" },
+  { name: "Stable Diffusion", image: "https://www.google.com/s2/favicons?domain=stability.ai&sz=128", color: "#3B82F6" },
+  { name: "DALL-E", image: "https://www.google.com/s2/favicons?domain=openai.com&sz=128", color: "#F59E0B" },
+  { name: "Llama", image: "https://www.google.com/s2/favicons?domain=meta.com&sz=128", color: "#8B5CF6" },
+  { name: "Copilot", image: "https://www.google.com/s2/favicons?domain=github.com&sz=128", color: "#0EA5E9" },
+  { name: "Gemini", image: "https://www.google.com/s2/favicons?domain=gemini.google.com&sz=128", color: "#4F46E5" },
+  { name: "Sora", image: "https://www.google.com/s2/favicons?domain=openai.com&sz=128", color: "#E11D48" },
+  { name: "Perplexity", image: "https://www.google.com/s2/favicons?domain=perplexity.ai&sz=128", color: "#06B6D4" },
 ];
 
 export const AIModelFilter = () => {
@@ -48,7 +48,7 @@ const ModelButton = ({ model, i }: { model: any; i: number }) => {
     >
       <div className={cn(
         "size-14 md:size-16 rounded-full bg-white overflow-hidden flex items-center justify-center border transition-all duration-300 relative",
-        "border-border/40 group-hover:border-primary/50 group-hover:shadow-[0_0_20px_rgba(139,92,246,0.25)] shadow-sm"
+        "border-border/40 group-hover:border-primary/50 group-hover:shadow-[0_0_20px_rgba(139,92,246,0.3)] shadow-sm"
       )}>
         <img 
           src={model.image} 
@@ -61,7 +61,7 @@ const ModelButton = ({ model, i }: { model: any; i: number }) => {
         />
         
         {/* Subtle glow effect on hover */}
-        <div className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-10 transition-opacity duration-500 bg-black/10 mix-blend-overlay" />
+        <div className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-10 transition-opacity duration-500 mix-blend-overlay" style={{ backgroundColor: model.color }} />
       </div>
       <span className="text-[10px] md:text-[11px] font-black uppercase tracking-widest text-muted-foreground group-hover:text-foreground transition-colors text-center">
         {model.name}
