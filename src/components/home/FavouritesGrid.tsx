@@ -10,15 +10,11 @@ export const FavouritesGrid = ({ prompts }: { prompts: any[] }) => {
   }).map((p, i) => ({ ...p, title: `${p.title} v${i + 1}` }));
 
   return (
-    <section className="container mx-auto px-6">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+    <section className="w-full">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8 gap-4 sm:gap-6">
         {displayPrompts.map((prompt, index) => (
-          <motion.div
+          <div
             key={index}
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: (index % 6) * 0.1 }}
             className="h-full"
           >
             <PromptCard 
@@ -32,7 +28,7 @@ export const FavouritesGrid = ({ prompts }: { prompts: any[] }) => {
               previewImage={prompt.images?.[0] || ""}
               promptPreview={prompt.promptText || ""}
             />
-          </motion.div>
+          </div>
         ))}
       </div>
     </section>

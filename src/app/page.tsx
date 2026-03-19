@@ -135,10 +135,10 @@ export default function LandingPage() {
       <div className="h-px bg-border/20 w-full" />
 
       {/* PAGE 5 CONTENT */}
-      <div className="w-full flex flex-col gap-14 pt-4">
+      <div className="w-full flex flex-col gap-10 pt-4">
         <TopContributors />
         
-        <div className="container mx-auto px-6 max-w-7xl">
+        <div className="w-full px-4 md:px-8 lg:px-12">
           <div className="flex flex-col items-start gap-2 mb-8">
             <h2 className="text-3xl md:text-4xl font-black tracking-tight flex items-center gap-3">
               Favourites <Heart className="text-primary fill-primary/20" size={28} />
