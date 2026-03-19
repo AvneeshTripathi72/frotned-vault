@@ -15,9 +15,10 @@ interface PromptRowProps {
   isVideo?: boolean;
   isCode?: boolean;
   compact?: boolean;
+  hideDetails?: boolean;
 }
 
-export const PromptRow = ({ title, subtitle, prompts, href, aspectRatio, isVideo, isCode, compact }: PromptRowProps) => {
+export const PromptRow = ({ title, subtitle, prompts, href, aspectRatio, isVideo, isCode, compact, hideDetails }: PromptRowProps) => {
   const compactClasses = "min-w-[100px] w-[100px] sm:min-w-[120px] sm:w-[120px] md:min-w-[140px] md:w-[140px] lg:min-w-[160px] lg:w-[160px] xl:min-w-[180px] xl:w-[180px] 2xl:min-w-[200px] 2xl:w-[200px]";
   const normalClasses = "min-w-[180px] w-[180px] sm:min-w-[220px] sm:w-[220px] md:min-w-[240px] md:w-[240px] lg:min-w-[260px] lg:w-[260px] xl:min-w-[15.5vw] xl:w-[15.5vw]";
   
@@ -45,7 +46,7 @@ export const PromptRow = ({ title, subtitle, prompts, href, aspectRatio, isVideo
         </div>
       </div>
 
-      <div className="flex gap-4 md:gap-5 overflow-x-auto pb-6 -mx-4 px-4 sm:-mx-8 sm:px-8 lg:-mx-12 lg:px-12 scrollbar-hide snap-x snap-mandatory items-stretch relative">
+      <div className="flex gap-3 md:gap-4 overflow-x-auto pb-6 -mx-4 px-4 sm:-mx-8 sm:px-8 lg:-mx-12 lg:px-12 scrollbar-hide snap-x snap-mandatory items-stretch relative">
         {prompts.map((prompt, index) => (
           <div 
             key={prompt.id || index} 
@@ -64,6 +65,7 @@ export const PromptRow = ({ title, subtitle, prompts, href, aspectRatio, isVideo
                 aspectRatio={aspectRatio}
                 isVideo={isVideo}
                 isCode={isCode}
+                hideDetails={hideDetails}
              />
           </div>
         ))}

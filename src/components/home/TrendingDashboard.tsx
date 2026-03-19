@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Zap } from "lucide-react";
 import Link from "next/link";
+import { PromptCard } from "@/components/prompt/PromptCard";
 
 export const TrendingDashboard = ({ prompts = [] }: { prompts?: any[] }) => {
   // Creating realistic dynamic rows using db data and matching exactly the requested mockup
@@ -30,51 +31,52 @@ export const TrendingDashboard = ({ prompts = [] }: { prompts?: any[] }) => {
   ];
 
   return (
-    <section className="w-full relative overflow-hidden transition-colors duration-300">
-      
-      <div className="w-full px-4 md:px-8 lg:px-12 space-y-4 relative z-10">
-        {/* Simple Heading matching the wireframe */}
-        <h2 className="text-2xl md:text-3xl font-black tracking-tight text-foreground dark:text-white transition-colors">Trending</h2>
+    <section className="w-full px-4 md:px-8 lg:px-12 py-8">
+      <div className="bg-card border border-border/40 rounded-[2.5rem] p-8 md:p-12 space-y-10 relative overflow-hidden transition-all duration-500 shadow-xl group">
+        {/* Subtle Background Glow - Theme Aware */}
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[140px] pointer-events-none group-hover:bg-primary/10 transition-all duration-700" />
+        
+        <div className="flex items-center justify-between relative z-10">
+          <div className="space-y-1.5">
+            <h2 className="text-3xl md:text-4xl font-black tracking-tighter text-foreground transition-colors">Trending Now</h2>
+            <p className="text-[10px] md:text-[11px] font-bold uppercase tracking-[0.25em] text-muted-foreground/60">Hottest prompts across categories</p>
+          </div>
+        </div>
 
-        <div className="space-y-10 pt-2 pb-6 w-full">
+        <div className="space-y-10 relative z-10">
           {trendingRows.map((row, i) => (
-            <div key={row.title} className="space-y-4 w-full border-b border-border/10 pb-10 last:border-b-0 last:pb-0">
-              <h3 className="text-[11px] md:text-xs font-black uppercase tracking-[0.2em] text-foreground/80 flex items-center gap-2">
-                {row.title}
-              </h3>
+            <div key={row.title} className="space-y-4 w-full group/row">
+              <div className="flex items-center gap-4">
+                <div className="h-[2px] w-10 bg-primary/40 rounded-full" />
+                <h3 className="text-[10px] md:text-[11px] font-black uppercase tracking-[0.35em] text-muted-foreground group-hover/row:text-primary transition-colors">
+                  {row.title}
+                </h3>
+                <div className="h-px flex-1 bg-border/20" />
+              </div>
 
-              <div className="flex gap-4 overflow-x-auto pb-4 -mx-1 px-1 scrollbar-hide snap-x">
+              <div className="flex gap-4 overflow-x-auto pb-6 scrollbar-hide snap-x pt-1">
                 {row.prompts.map((p, j) => (
-                  <Link href={`/prompt/${p._id || p.id || "explore"}`} key={`${p._id || j}-${i}`} className="snap-start shrink-0">
+                  <div key={`${p._id || j}-${i}`} className="snap-start shrink-0 min-w-[150px] w-[150px] md:min-w-[180px] md:w-[180px] first:pl-2">
                     <motion.div
                       initial={{ opacity: 0, scale: 0.95 }}
                       whileInView={{ opacity: 1, scale: 1 }}
                       viewport={{ once: true }}
-                      transition={{ delay: j * 0.03, duration: 0.3 }}
-                      className="min-w-[140px] w-[140px] md:min-w-[170px] md:w-[170px] rounded-xl bg-card border border-border/30 hover:border-primary/50 hover:shadow-xl transition-all cursor-pointer group flex flex-col overflow-hidden"
+                      transition={{ delay: j * 0.02, duration: 0.4 }}
                     >
-                      <div className="aspect-[3/4] bg-muted/20 mb-0 relative border-b border-border/20 overflow-hidden">
-                          {p.images?.[0] ? (
-                            <img src={p.images[0]} alt={p.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                          ) : (
-                            <div className="absolute inset-0 bg-gradient-to-br from-muted-foreground/5 to-muted-foreground/10 flex flex-col items-center justify-center p-2 text-center">
-                              <Zap size={16} className="text-muted-foreground/30 mb-1" />
-                              <span className="text-muted-foreground/30 text-[8px] tracking-widest font-mono uppercase">Render</span>
-                            </div>
-                          )}
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
-                      </div>
-                      
-                      <div className="p-3 md:p-4 bg-card flex flex-col justify-start gap-1">
-                         <h4 className="text-[11px] md:text-sm font-black tracking-tight text-foreground group-hover:text-primary transition-colors leading-tight truncate">
-                          {p.title}
-                         </h4>
-                         <p className="text-[9px] md:text-xs font-medium text-muted-foreground/70 line-clamp-1 break-all leading-relaxed">
-                          {p.tagline || p.desc || p.short_description || "A masterfully engineered prompt structure."}
-                         </p>
-                      </div>
+                      <PromptCard 
+                        id={p._id || p.id || "explore"}
+                        title={p.title}
+                        previewImage={p.images?.[0] || ""}
+                        platform={p.platform || "AI Prompt"}
+                        price={p.price || 50}
+                        rating={p.rating || 5}
+                        author={p.author || { username: p.seller || "anon", avatar: "" }}
+                        isVideo={false}
+                        isCode={false}
+                        promptPreview={""}
+                      />
                     </motion.div>
-                  </Link>
+                  </div>
                 ))}
               </div>
             </div>

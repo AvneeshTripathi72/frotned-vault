@@ -64,38 +64,38 @@ export const CategoryGrid = () => {
             transition={{ delay: i * 0.1 }}
             className="group relative h-full cursor-pointer"
           >
-            <div className="h-full p-8 rounded-[2rem] bg-[#0a0a0a] border border-white/10 relative overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 hover:border-white/20">
+            <div className="h-full p-8 rounded-[2.5rem] bg-card border border-border/60 relative overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 hover:border-primary/40 group">
               {/* Colored Glow Orb */}
               <div 
-                className="absolute -top-20 -right-20 w-48 h-48 rounded-full blur-[60px] opacity-0 group-hover:opacity-30 transition-opacity duration-700 pointer-events-none" 
+                className="absolute -top-20 -right-20 w-48 h-48 rounded-full blur-[80px] opacity-0 group-hover:opacity-20 transition-opacity duration-700 pointer-events-none" 
                 style={{ backgroundColor: cat.color }} 
               />
               
               <div className="space-y-6 relative z-10 flex flex-col h-full">
                 <div 
-                  className="w-14 h-14 rounded-2xl flex items-center justify-center border transition-all duration-500 shadow-sm group-hover:scale-110 group-hover:rotate-3" 
+                  className="w-16 h-16 rounded-[1.5rem] flex items-center justify-center border transition-all duration-500 shadow-sm group-hover:scale-110 group-hover:rotate-3" 
                   style={{ 
                     color: cat.color, 
-                    borderColor: `${cat.color}40`, 
-                    backgroundColor: `${cat.color}15` 
+                    borderColor: `${cat.color}30`, 
+                    backgroundColor: `${cat.color}10` 
                   }}
                 >
-                  <cat.icon size={24} strokeWidth={2.5} />
+                  <cat.icon size={28} strokeWidth={2.5} />
                 </div>
                 
                 <div className="space-y-3 mt-auto pt-8">
-                  <h3 className="text-xl font-bold tracking-tight text-white/90 group-hover:text-white transition-colors">
+                  <h3 className="text-xl font-black tracking-tight text-foreground transition-colors">
                     {cat.title}
                   </h3>
-                  <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-white/40 leading-relaxed group-hover:text-white/70 transition-colors">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-muted-foreground leading-relaxed group-hover:text-foreground transition-colors">
                     {cat.tagline}
                   </p>
                 </div>
               </div>
 
-              <div className="absolute bottom-6 right-6 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-4 group-hover:translate-x-0">
-                <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center backdrop-blur-md border border-white/20">
-                  <ChevronRight className="w-4 h-4 text-white" />
+              <div className="absolute bottom-8 right-8 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-4 group-hover:translate-x-0">
+                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center backdrop-blur-md border border-primary/20">
+                  <ChevronRight className="w-5 h-5 text-primary" />
                 </div>
               </div>
             </div>

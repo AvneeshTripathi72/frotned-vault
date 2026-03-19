@@ -66,7 +66,7 @@ export default function LandingPage() {
   });
 
   return (
-    <div className="w-full min-h-screen bg-background overflow-x-hidden pb-16 flex flex-col gap-16 max-w-[1920px] mx-auto">
+    <div className="w-full min-h-screen bg-background overflow-x-hidden pb-1 flex flex-col gap-1 max-w-[1920px] mx-auto">
       
       {/* PAGE 1 CONTENT */}
       <div className="w-full flex flex-col gap-10 lg:gap-14 py-4">
@@ -75,8 +75,9 @@ export default function LandingPage() {
           title="Image Transformation Prompts" 
           prompts={imageTransformPrompts} 
           href="/explore" 
-          aspectRatio="aspect-[9/16]" 
+          aspectRatio="aspect-[4/5.2]" 
           compact={true}
+          hideDetails={true}
         />
 
         <PromptRow 
@@ -84,9 +85,10 @@ export default function LandingPage() {
           subtitle={["Reel", "AI Avatar", "Post"]} 
           prompts={instagramPrompts} 
           href="/explore" 
-          aspectRatio="aspect-[9/16]"
+          aspectRatio="aspect-[4/5.2]"
           isVideo={true}
           compact={true}
+          hideDetails={true}
         />
 
       </div>
@@ -103,23 +105,37 @@ export default function LandingPage() {
           title="Youtube Prompts" 
           prompts={youtubePrompts} 
           href="/explore" 
-          aspectRatio="aspect-video"
+          aspectRatio="aspect-[16/10]"
           isVideo={true}
+          hideDetails={true}
         />
 
         <StackedPromptRow title="" prompts={mixedPrompts} href="/explore" />
 
-        <div className="w-full px-6 lg:px-12">
-          <h3 className="text-xl md:text-2xl font-bold tracking-tight text-foreground/80 font-mono mb-6">
-            Based on Your Profession and Interest
-          </h3>
-          <PromptRow 
-            title="Software Development Prompts" 
-            prompts={softwareDevPrompts} 
-            href="/explore" 
-            aspectRatio="aspect-video"
-            isCode={true}
-          />
+        <div className="w-full px-4 md:px-8 lg:px-12">
+          <div className="bg-card border border-border/40 rounded-[2.5rem] p-8 md:p-12 space-y-10 relative overflow-hidden transition-all duration-500 shadow-xl group">
+             {/* Subtle Background Glow */}
+             <div className="absolute top-0 left-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[140px] pointer-events-none group-hover:bg-primary/10 transition-all duration-700" />
+            
+            <div className="space-y-1.5 relative z-10">
+              <p className="text-[10px] md:text-[11px] font-bold uppercase tracking-[0.25em] text-muted-foreground/60">
+                Based on Your Profession and Interest
+              </p>
+              <h2 className="text-3xl md:text-4xl font-black tracking-tighter text-foreground transition-colors">
+                Software Development Prompts
+              </h2>
+            </div>
+            
+            <div className="relative z-10 -mx-4 md:-mx-8">
+              <PromptRow 
+                title="" 
+                prompts={softwareDevPrompts} 
+                href="/explore" 
+                aspectRatio="aspect-[3/4]"
+                isCode={true}
+              />
+            </div>
+          </div>
         </div>
       </div>
 
@@ -146,19 +162,28 @@ export default function LandingPage() {
         <TopContributors />
         
         <div className="w-full px-4 md:px-8 lg:px-12">
-          <div className="flex flex-col items-start gap-2 mb-8">
-            <h2 className="text-3xl md:text-4xl font-black tracking-tight flex items-center gap-3">
-              Favourites <Heart className="text-primary fill-primary/20" size={28} />
-            </h2>
-            <div className="h-1 w-16 bg-primary rounded-full opacity-50" />
-            <p className="text-muted-foreground font-medium text-sm mt-2">Most liked prompts curated by the community.</p>
+          <div className="bg-card border border-border/40 rounded-[2.5rem] p-8 md:p-12 space-y-10 relative overflow-hidden transition-all duration-500 shadow-xl group">
+            {/* Subtle Background Glow */}
+            <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[140px] pointer-events-none group-hover:bg-primary/10 transition-all duration-700" />
+            
+            <div className="flex flex-col items-start gap-2 mb-8 relative z-10">
+              <div className="flex items-center gap-3">
+                <div className="h-[2px] w-12 bg-primary/40 rounded-full" />
+                <h2 className="text-3xl md:text-4xl font-black tracking-tighter text-foreground transition-colors flex items-center gap-3">
+                  Favourites <Heart className="text-primary fill-primary/20" size={28} />
+                </h2>
+              </div>
+              <p className="text-[10px] md:text-[11px] font-bold uppercase tracking-[0.25em] text-muted-foreground/60 ml-16">Most liked prompts curated by the community.</p>
+            </div>
+            
+            <div className="relative z-10">
+              {loading ? (
+                <div className="w-full h-64 bg-muted/20 animate-pulse rounded-2xl" />
+              ) : (
+                <FavouritesGrid prompts={prompts} />
+              )}
+            </div>
           </div>
-          
-          {loading ? (
-            <div className="w-full h-64 bg-secondary animate-pulse rounded-2xl" />
-          ) : (
-            <FavouritesGrid prompts={prompts} />
-          )}
         </div>
       </div>
 
