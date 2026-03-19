@@ -66,10 +66,10 @@ export default function LandingPage() {
   });
 
   return (
-    <div className="w-full min-h-screen bg-background overflow-x-hidden pt-10 pb-16 flex flex-col gap-16 max-w-[1920px] mx-auto">
+    <div className="w-full min-h-screen bg-background overflow-x-hidden pb-16 flex flex-col gap-16 max-w-[1920px] mx-auto">
       
       {/* PAGE 1 CONTENT */}
-      <div className="w-full flex flex-col gap-14">
+      <div className="w-full min-h-[calc(100vh-100px)] flex flex-col justify-center gap-8 py-8 shrink-0">
         <PromptRow title="Image Transformation Prompts" prompts={imageTransformPrompts} href="/explore" aspectRatio="aspect-[9/16]" />
         
         <div className="w-full px-6 lg:px-12 flex items-center justify-center">
