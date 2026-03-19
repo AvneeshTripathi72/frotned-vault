@@ -66,13 +66,13 @@ export default function LandingPage() {
   });
 
   return (
-    <div className="w-full min-h-screen bg-background overflow-x-hidden pt-12 pb-24 flex flex-col gap-24 lg:gap-32">
+    <div className="w-full min-h-screen bg-background overflow-x-hidden pt-10 pb-16 flex flex-col gap-16 max-w-[1920px] mx-auto">
       
       {/* PAGE 1 CONTENT */}
-      <div className="w-full flex flex-col gap-24 lg:gap-32">
+      <div className="w-full flex flex-col gap-14">
         <PromptRow title="Image Transformation Prompts" prompts={imageTransformPrompts} href="/explore" aspectRatio="aspect-[9/16]" />
         
-        <div className="w-full max-w-7xl mx-auto flex items-center justify-center">
+        <div className="w-full px-6 lg:px-12 flex items-center justify-center">
            <div className="h-px bg-border/40 w-full" />
         </div>
         
@@ -89,7 +89,7 @@ export default function LandingPage() {
       <div className="h-px bg-border/20 w-full" />
 
       {/* PAGE 2 CONTENT */}
-      <div className="w-full flex flex-col gap-24 lg:gap-32">
+      <div className="w-full flex flex-col gap-14">
         <div className="container mx-auto">
           <AIModelFilter />
         </div>
@@ -104,8 +104,8 @@ export default function LandingPage() {
 
         <StackedPromptRow title="" prompts={mixedPrompts} href="/explore" />
 
-        <div className="container mx-auto px-6 w-full py-12">
-          <h3 className="text-xl md:text-2xl font-bold tracking-tight text-foreground/80 font-mono mb-10">
+        <div className="w-full px-6 lg:px-12">
+          <h3 className="text-xl md:text-2xl font-bold tracking-tight text-foreground/80 font-mono mb-6">
             Based on Your Profession and Interest
           </h3>
           <PromptRow 
@@ -121,7 +121,7 @@ export default function LandingPage() {
       <div className="h-px bg-border/20 w-full" />
 
       {/* PAGE 3 CONTENT */}
-      <div className="w-full flex flex-col gap-24 lg:gap-32 pt-12 pb-12">
+      <div className="w-full flex flex-col gap-14">
         <ProfessionSection />
         <CategoryGrid />
         <PackageGrid />
@@ -130,14 +130,14 @@ export default function LandingPage() {
       <div className="h-px bg-border/20 w-full" />
 
       {/* PAGE 4 CONTENT */}
-      <div className="w-full py-16">
+      <div className="w-full">
         <TrendingDashboard prompts={prompts} />
       </div>
 
       <div className="h-px bg-border/20 w-full" />
 
       {/* PAGE 5 CONTENT */}
-      <div className="w-full flex flex-col gap-24 lg:gap-32 pt-16">
+      <div className="w-full flex flex-col gap-14 pt-4">
         <TopContributors />
         
         <div className="w-full px-4 md:px-8 lg:px-12">
