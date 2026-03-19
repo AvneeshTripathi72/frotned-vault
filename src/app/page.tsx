@@ -76,6 +76,7 @@ export default function LandingPage() {
           prompts={imageTransformPrompts} 
           href="/explore" 
           aspectRatio="aspect-[9/16]" 
+          compact={true}
         />
 
         <PromptRow 
@@ -85,6 +86,7 @@ export default function LandingPage() {
           href="/explore" 
           aspectRatio="aspect-[9/16]"
           isVideo={true}
+          compact={true}
         />
 
       </div>
