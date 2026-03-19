@@ -4,9 +4,10 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { PromptCard } from "@/components/prompt/PromptCard";
-import { ChevronRight, Heart } from "lucide-react";
+import { ChevronRight, Heart, Instagram, Youtube } from "lucide-react";
 import { useEffect, useState } from "react";
 import { PromptRow } from "@/components/home/PromptRow";
+import { StackedPromptRow } from "@/components/home/StackedPromptRow";
 import { AIModelFilter } from "@/components/home/AIModelFilter";
 import { ProfessionSection } from "@/components/home/ProfessionSection";
 import { CategoryGrid } from "@/components/home/CategoryGrid";
@@ -77,22 +78,34 @@ export default function LandingPage() {
       />
 
       <PromptRow 
-        title="Instagram Prompts" 
+        title={
+          <>
+            <Instagram size={24} className="text-primary" /> Instagram Prompts
+          </>
+        } 
         subtitle={["Reel", "AI Avatar", "Post"]} 
         prompts={instagramPrompts} 
         href="/explore" 
+        aspectRatio="aspect-[9/16]"
+        isVideo={true}
       />
 
       <AIModelFilter />
 
       <PromptRow 
-        title="YouTube Content Forge" 
+        title={
+          <>
+            <Youtube size={24} className="text-primary" /> YouTube Content Forge
+          </>
+        } 
         prompts={youtubePrompts} 
         href="/explore" 
+        aspectRatio="aspect-video"
+        isVideo={true}
       />
 
-      <PromptRow 
-        title="Mixed Intelligence" 
+      <StackedPromptRow 
+        title="Professional Templates" 
         prompts={mixedPrompts} 
         href="/explore" 
       />
@@ -103,6 +116,7 @@ export default function LandingPage() {
         title="Software Development Prompts" 
         prompts={softwareDevPrompts} 
         href="/explore" 
+        isCode={true}
       />
 
       <CategoryGrid />

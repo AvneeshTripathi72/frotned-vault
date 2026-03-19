@@ -1,31 +1,19 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { 
-  Sparkles, 
-  Zap, 
-  Brain, 
-  MessageSquare, 
-  ImageIcon, 
-  Video, 
-  Code, 
-  Search, 
-  Cpu, 
-  Globe 
-} from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const models = [
-  { name: "ChatGPT", icon: MessageSquare, color: "#10a37f" },
-  { name: "Midjourney", icon: ImageIcon, color: "#AC8BF6" },
-  { name: "Claude", icon: Brain, color: "#d97757" },
-  { name: "Stable Diffusion", icon: Sparkles, color: "#3B82F6" },
-  { name: "DALL-E", icon: Zap, color: "#F59E0B" },
-  { name: "Llama", icon: Cpu, color: "#8B5CF6" },
-  { name: "Copilot", icon: Code, color: "#0EA5E9" },
-  { name: "Gemini", icon: Sparkles, color: "#4F46E5" },
-  { name: "Sora", icon: Video, color: "#E11D48" },
-  { name: "Perplexity", icon: Search, color: "#06B6D4" },
+  { name: "ChatGPT", image: "https://logo.clearbit.com/openai.com", color: "#10a37f" },
+  { name: "Midjourney", image: "https://logo.clearbit.com/midjourney.com", color: "#AC8BF6" },
+  { name: "Claude", image: "https://logo.clearbit.com/anthropic.com", color: "#d97757" },
+  { name: "Stable Diffusion", image: "https://logo.clearbit.com/stability.ai", color: "#3B82F6" },
+  { name: "DALL-E", image: "https://logo.clearbit.com/openai.com", color: "#F59E0B" },
+  { name: "Llama", image: "https://logo.clearbit.com/meta.com", color: "#8B5CF6" },
+  { name: "Copilot", image: "https://logo.clearbit.com/github.com", color: "#0EA5E9" },
+  { name: "Gemini", image: "https://logo.clearbit.com/google.com", color: "#4F46E5" },
+  { name: "Sora", image: "https://logo.clearbit.com/openai.com", color: "#E11D48" },
+  { name: "Perplexity", image: "https://logo.clearbit.com/perplexity.ai", color: "#06B6D4" },
 ];
 
 export const AIModelFilter = () => {
@@ -59,16 +47,21 @@ const ModelButton = ({ model, i }: { model: any; i: number }) => {
       className="group flex flex-col items-center gap-3 w-20 md:w-24"
     >
       <div className={cn(
-        "size-14 md:size-16 rounded-full flex items-center justify-center border transition-all duration-300 relative",
-        "bg-card/40 backdrop-blur-md border-border/40 group-hover:border-primary/50 group-hover:shadow-[0_0_20px_rgba(139,92,246,0.15)] shadow-sm"
+        "size-14 md:size-16 rounded-full bg-white overflow-hidden flex items-center justify-center border transition-all duration-300 relative",
+        "border-border/40 group-hover:border-primary/50 group-hover:shadow-[0_0_20px_rgba(139,92,246,0.25)] shadow-sm"
       )}>
-        <model.icon 
-          className="w-6 h-6 md:w-7 md:h-7 text-muted-foreground group-hover:text-primary transition-colors duration-300" 
-          strokeWidth={1.5}
+        <img 
+          src={model.image} 
+          alt={model.name}
+          className="w-[60%] h-[60%] object-contain transition-transform duration-500 group-hover:scale-110"
+          onError={(e) => {
+            e.currentTarget.src = `https://ui-avatars.com/api/?name=${model.name.replace(" ", "+")}&background=random&color=fff&size=100`;
+            e.currentTarget.className = "w-full h-full object-cover transition-transform duration-500 group-hover:scale-110";
+          }}
         />
         
         {/* Subtle glow effect on hover */}
-        <div className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-10 transition-opacity duration-500 bg-primary" />
+        <div className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-10 transition-opacity duration-500 bg-black/10 mix-blend-overlay" />
       </div>
       <span className="text-[10px] md:text-[11px] font-black uppercase tracking-widest text-muted-foreground group-hover:text-foreground transition-colors text-center">
         {model.name}

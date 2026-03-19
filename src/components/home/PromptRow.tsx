@@ -6,20 +6,23 @@ import Link from "next/link";
 import { PromptCard } from "@/components/prompt/PromptCard";
 
 interface PromptRowProps {
-  title: string;
+  title: string | React.ReactNode;
   subtitle?: string[];
   prompts: any[];
   href: string;
   itemsPerRow?: number;
+  aspectRatio?: string;
+  isVideo?: boolean;
+  isCode?: boolean;
 }
 
-export const PromptRow = ({ title, subtitle, prompts, href }: PromptRowProps) => {
+export const PromptRow = ({ title, subtitle, prompts, href, aspectRatio, isVideo, isCode }: PromptRowProps) => {
   return (
     <section className="container mx-auto px-6 space-y-8">
       <div className="flex items-end justify-between">
         <div className="space-y-1">
           <div className="flex items-center gap-4">
-            <h2 className="text-3xl font-black tracking-tight text-foreground">{title}</h2>
+            <h2 className="text-3xl font-black tracking-tight text-foreground flex items-center gap-3">{title}</h2>
             {subtitle && (
               <div className="hidden sm:flex items-center gap-2">
                 {subtitle.map((tag) => (
@@ -52,7 +55,7 @@ export const PromptRow = ({ title, subtitle, prompts, href }: PromptRowProps) =>
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
-            className="min-w-[280px] w-72 md:min-w-[320px] md:w-80 snap-start"
+            className={`min-w-[280px] w-72 md:min-w-[320px] md:w-80 snap-start shrink-0`}
           >
              <PromptCard 
                 id={prompt.id || prompt._id}
@@ -64,6 +67,9 @@ export const PromptRow = ({ title, subtitle, prompts, href }: PromptRowProps) =>
                 author={prompt.author || { username: prompt.seller, avatar: "" }}
                 previewImage={prompt.images?.[0] || ""}
                 promptPreview={prompt.promptText || ""}
+                aspectRatio={aspectRatio}
+                isVideo={isVideo}
+                isCode={isCode}
              />
           </motion.div>
         ))}
