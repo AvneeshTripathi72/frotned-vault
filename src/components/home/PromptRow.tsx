@@ -39,11 +39,11 @@ export const PromptRow = ({ title, subtitle, prompts, href, aspectRatio, isVideo
         </div>
       </div>
 
-      <div className="flex gap-4 md:gap-5 overflow-x-auto pb-6 -mx-4 px-4 sm:-mx-8 sm:px-8 lg:-mx-12 lg:px-12 scrollbar-hide snap-x snap-mandatory items-stretch relative">
+      <div className="flex gap-4 overflow-x-auto pb-6 -mx-4 px-4 sm:-mx-8 sm:px-8 lg:-mx-12 lg:px-12 scrollbar-hide snap-x snap-mandatory items-stretch relative">
         {prompts.map((prompt, index) => (
           <div 
             key={prompt.id || index} 
-            className="min-w-[120px] w-[120px] sm:min-w-[140px] sm:w-[140px] md:min-w-[160px] md:w-[160px] lg:min-w-[180px] lg:w-[180px] xl:min-w-[200px] xl:w-[200px] 2xl:min-w-[220px] 2xl:w-[220px] snap-start shrink-0"
+            className="min-w-[80px] w-[80px] sm:min-w-[100px] sm:w-[100px] md:min-w-[120px] md:w-[120px] lg:min-w-[140px] lg:w-[140px] xl:min-w-[160px] xl:w-[160px] 2xl:min-w-[180px] 2xl:w-[180px] snap-start shrink-0"
           >
              <PromptCard 
                 id={prompt.id || prompt._id}
