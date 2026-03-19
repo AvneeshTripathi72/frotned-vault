@@ -81,11 +81,19 @@ export const Navbar = () => {
         scrolled ? "bg-white/80 dark:bg-[#0B0B0F]/80 backdrop-blur-md border-b border-border" : "bg-transparent"
       )}>
         <div className="container mx-auto px-6 h-16 flex items-center justify-between gap-8">
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-6 lg:gap-12">
             <Link href="/" className="text-xl font-black tracking-tighter flex items-center gap-2">
               <span className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white shadow-lg shadow-primary/20">P</span>
               <span className="hidden sm:inline-block">Vault<span className="text-primary italic">.</span></span>
             </Link>
+            
+            {/* Desktop Navigation */}
+            <div className="hidden lg:flex items-center gap-8">
+              <Link href="/explore" className="text-sm font-bold text-muted-foreground hover:text-foreground transition-colors">Explore</Link>
+              <Link href="/sell" className="text-sm font-bold text-muted-foreground hover:text-foreground transition-colors">Add Prompt</Link>
+              <Link href="/dashboard" className="text-sm font-bold text-muted-foreground hover:text-foreground transition-colors">Dashboard</Link>
+              <Link href="/purchases" className="text-sm font-bold text-muted-foreground hover:text-foreground transition-colors">Purchases</Link>
+            </div>
           </div>
 
           <SearchControl />

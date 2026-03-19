@@ -30,7 +30,7 @@ export const PackageGrid = () => {
     <section className="container mx-auto px-6 space-y-12">
       <div className="flex items-end justify-between">
         <div className="space-y-1">
-          <h2 className="text-3xl font-black tracking-tight text-foreground">Premium Guide Packages</h2>
+          <h2 className="text-3xl font-black tracking-tight text-foreground">Guide & Packages</h2>
           <div className="h-1 w-12 bg-primary rounded-full opacity-50" />
         </div>
         <Link 

@@ -46,15 +46,16 @@
 @layer base {
   :root {
     /* Theme Tokens */
-    --bg-main: #F5F7FB;
+    --bg-main: #FAFAFF;
     --bg-surface: #FFFFFF;
-    --bg-soft: #F1F3F9;
+    --bg-soft: #F3F4FB;
     --text-primary: #111827;
-    --text-secondary: #4B5563;
+    --text-secondary: #374151;
     --text-muted: #6B7280;
     --border-color: #E6E8EF;
-    --accent-primary: #7C3AED;
-    --accent-hover: #6D28D9;
+    --accent-primary: #6C63FF; /* Violet */
+    --accent-hover: #A855F7;   /* Purple Gradient */
+    --glow-secondary: rgba(108, 99, 255, 0.2);
 
     /* Base Mappings */
     --background: var(--bg-main);
@@ -71,15 +72,16 @@
 
   .dark {
     /* Theme Tokens Overrides */
-    --bg-main: #0B0B0F;
-    --bg-surface: #181824;
-    --bg-soft: #1F1F2E;
+    --bg-main: #0F0F1A; /* Near Black */
+    --bg-surface: #151522;
+    --bg-soft: #1D1D2C;
     --text-primary: #FFFFFF;
-    --text-secondary: #A1A1AA;
-    --text-muted: #71717A;
-    --border-color: rgba(255, 255, 255, 0.08);
-    --accent-primary: #8B5CF6;
-    --accent-hover: #7C3AED;
+    --text-secondary: #E2E8F0;
+    --text-muted: #94A3B8;
+    --border-color: rgba(108, 99, 255, 0.15); /* Soft violet border */
+    --accent-primary: #6C63FF; /* Violet */
+    --accent-hover: #A855F7;
+    --glow-secondary: rgba(168, 85, 247, 0.25); /* #A855F7 */
 
     /* Base Mappings - These will inherit from tokens */
   }
@@ -93,9 +95,9 @@
   body {
     background-color: var(--bg-main);
     background-image: 
-      radial-gradient(circle at 50% -20%, var(--accent-primary) 0.08, transparent 50%),
-      radial-gradient(circle at 0% 100%, var(--accent-primary) 0.03, transparent 40%),
-      radial-gradient(circle at 100% 100%, var(--accent-primary) 0.03, transparent 40%);
+      radial-gradient(circle at 10% 0%, var(--glow-secondary) 0.08, transparent 50%),
+      radial-gradient(circle at 90% 100%, var(--glow-secondary) 0.05, transparent 40%),
+      radial-gradient(circle at 50% 50%, var(--glow-secondary) 0.02, transparent 60%);
     background-attachment: fixed;
     color: var(--text-secondary);
     font-feature-settings: "rlig" 1, "calt" 1, "ss01" 1;
@@ -118,28 +120,53 @@
   .glass-card {
     background: var(--bg-surface);
     border: 1px solid var(--border-color);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.05);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    transition: all 0.4s ease-in-out;
   }
 
   .dark .glass-card {
-    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
-    border-color: var(--border-color);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.4);
   }
 
   .glass-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(108, 99, 255, 0.15); /* Lift effect + shadow glow */
     border-color: var(--accent-primary);
   }
 
   .dark .glass-card:hover {
-    box-shadow: 0 10px 30px rgba(139,92,246,0.15);
+    box-shadow: 0 15px 40px rgba(168, 85, 247, 0.3); /* Lift effect + shadow glow */
     border-color: var(--accent-primary);
   }
 
+  .btn-premium-hover {
+    transition: all 0.3s ease-in-out;
+  }
+  .btn-premium-hover:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(168, 85, 247, 0.4); /* soft glow */
+  }
+
+  .link-underline-slide {
+    position: relative;
+    text-decoration: none;
+  }
+  .link-underline-slide::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 1px;
+    bottom: -2px;
+    left: 0;
+    background-color: currentColor;
+    transition: width 0.3s ease-in-out;
+  }
+  .link-underline-slide:hover::after {
+    width: 100%;
+  }
+
   .text-gradient {
-    background: linear-gradient(135deg, var(--accent-primary) 0%, #8B5CF6 100%);
+    background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-hover) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;

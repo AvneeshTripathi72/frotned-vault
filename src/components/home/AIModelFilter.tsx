@@ -4,68 +4,61 @@ import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 const models = [
-  { name: "ChatGPT", image: "https://www.google.com/s2/favicons?domain=openai.com&sz=128", color: "#10a37f" },
   { name: "Midjourney", image: "https://www.google.com/s2/favicons?domain=midjourney.com&sz=128", color: "#AC8BF6" },
+  { name: "ChatGPT", image: "https://www.google.com/s2/favicons?domain=openai.com&sz=128", color: "#10a37f" },
   { name: "Claude", image: "https://www.google.com/s2/favicons?domain=anthropic.com&sz=128", color: "#d97757" },
   { name: "Stable Diffusion", image: "https://www.google.com/s2/favicons?domain=stability.ai&sz=128", color: "#3B82F6" },
   { name: "DALL-E", image: "https://www.google.com/s2/favicons?domain=openai.com&sz=128", color: "#F59E0B" },
   { name: "Llama", image: "https://www.google.com/s2/favicons?domain=meta.com&sz=128", color: "#8B5CF6" },
   { name: "Copilot", image: "https://www.google.com/s2/favicons?domain=github.com&sz=128", color: "#0EA5E9" },
-  { name: "Gemini", image: "https://www.google.com/s2/favicons?domain=gemini.google.com&sz=128", color: "#4F46E5" },
-  { name: "Sora", image: "https://www.google.com/s2/favicons?domain=openai.com&sz=128", color: "#E11D48" },
   { name: "Perplexity", image: "https://www.google.com/s2/favicons?domain=perplexity.ai&sz=128", color: "#06B6D4" },
 ];
 
 export const AIModelFilter = () => {
   return (
-    <section className="container mx-auto px-6 py-8">
-      <div className="flex flex-col gap-6 items-center">
-        <div className="flex flex-wrap justify-center items-center gap-4 md:gap-8">
-          {models.slice(0, 5).map((model, i) => (
-            <ModelButton key={model.name} model={model} i={i} />
-          ))}
-        </div>
-        <div className="flex flex-wrap justify-center items-center gap-4 md:gap-8">
-          {models.slice(5).map((model, i) => (
-            <ModelButton key={model.name} model={model} i={i + 5} />
-          ))}
-        </div>
+    <section className="w-full">
+      <div className="flex flex-wrap md:flex-nowrap gap-4 md:gap-6 w-full items-center justify-start overflow-x-auto pb-4 scrollbar-hide px-6">
+        {models.map((model, i) => (
+          <ModelCircle key={model.name} model={model} i={i} />
+        ))}
+        {/* Placeholder circles just like the wireframe for expansion */}
+        {Array(3).fill(0).map((_, i) => (
+          <div key={`empty-${i}`} className="w-14 h-14 md:w-16 md:h-16 shrink-0 rounded-full border border-border/40 bg-card/10 opacity-50" />
+        ))}
       </div>
     </section>
   );
 };
 
-const ModelButton = ({ model, i }: { model: any; i: number }) => {
+const ModelCircle = ({ model, i }: { model: any; i: number }) => {
   return (
     <motion.button
-      initial={{ opacity: 0, scale: 0.8 }}
+      initial={{ opacity: 0, scale: 0.5 }}
       whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: i * 0.05 }}
-      whileHover={{ y: -4, scale: 1.05 }}
+      transition={{ duration: 0.4, delay: i * 0.05, ease: "backOut" }}
+      whileHover={{ y: -5, scale: 1.1 }}
       whileTap={{ scale: 0.95 }}
-      className="group flex flex-col items-center gap-3 w-20 md:w-24"
+      title={model.name}
+      className={cn(
+        "shrink-0 group flex items-center justify-center w-14 h-14 md:w-16 md:h-16 rounded-full bg-white dark:bg-[#0a0a0a] border border-border/60 hover:border-primary/50 transition-all duration-300 relative overflow-hidden shadow-sm",
+        "hover:shadow-[0_0_15px_rgba(255,255,255,0.1)]"
+      )}
     >
-      <div className={cn(
-        "size-14 md:size-16 rounded-full bg-white overflow-hidden flex items-center justify-center border transition-all duration-300 relative",
-        "border-border/40 group-hover:border-primary/50 group-hover:shadow-[0_0_20px_rgba(139,92,246,0.3)] shadow-sm"
-      )}>
-        <img 
-          src={model.image} 
-          alt={model.name}
-          className="w-[60%] h-[60%] object-contain transition-transform duration-500 group-hover:scale-110"
-          onError={(e) => {
-            e.currentTarget.src = `https://ui-avatars.com/api/?name=${model.name.replace(" ", "+")}&background=random&color=fff&size=100`;
-            e.currentTarget.className = "w-full h-full object-cover transition-transform duration-500 group-hover:scale-110";
-          }}
-        />
-        
-        {/* Subtle glow effect on hover */}
-        <div className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-10 transition-opacity duration-500 mix-blend-overlay" style={{ backgroundColor: model.color }} />
-      </div>
-      <span className="text-[10px] md:text-[11px] font-black uppercase tracking-widest text-muted-foreground group-hover:text-foreground transition-colors text-center">
-        {model.name}
-      </span>
+      <div 
+        className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none" 
+        style={{ background: `radial-gradient(circle at center, ${model.color} 0%, transparent 80%)` }} 
+      />
+      
+      <img 
+        src={model.image} 
+        alt={model.name}
+        className="w-[50%] h-[50%] object-contain opacity-90 group-hover:opacity-100 transition-opacity mix-blend-multiply dark:mix-blend-normal z-10"
+        onError={(e) => {
+          e.currentTarget.src = `https://ui-avatars.com/api/?name=${model.name.replace(" ", "+")}&background=random&color=fff&size=100`;
+          e.currentTarget.className = "w-full h-full object-cover z-10";
+        }}
+      />
     </motion.button>
   );
 };
