@@ -12,18 +12,27 @@ const models = [
   { name: "Llama", image: "https://www.google.com/s2/favicons?domain=meta.com&sz=128", color: "#8B5CF6" },
   { name: "Copilot", image: "https://www.google.com/s2/favicons?domain=github.com&sz=128", color: "#0EA5E9" },
   { name: "Perplexity", image: "https://www.google.com/s2/favicons?domain=perplexity.ai&sz=128", color: "#06B6D4" },
+  { name: "Gemini", image: "https://www.google.com/s2/favicons?domain=gemini.google.com&sz=128", color: "#4285F4" },
+  { name: "Notion AI", image: "https://www.google.com/s2/favicons?domain=notion.so&sz=128", color: "#000000" },
+  { name: "Jasper", image: "https://www.google.com/s2/favicons?domain=jasper.ai&sz=128", color: "#6C63FF" },
+  { name: "Copy.ai", image: "https://www.google.com/s2/favicons?domain=copy.ai&sz=128", color: "#1E293B" },
+  { name: "Runway", image: "https://www.google.com/s2/favicons?domain=runwayml.com&sz=128", color: "#EAB308" },
+  { name: "HuggingFace", image: "https://www.google.com/s2/favicons?domain=huggingface.co&sz=128", color: "#FBBF24" },
+  { name: "Leonardo.ai", image: "https://www.google.com/s2/favicons?domain=leonardo.ai&sz=128", color: "#D946EF" },
+  { name: "Groq", image: "https://www.google.com/s2/favicons?domain=groq.com&sz=128", color: "#EF4444" },
+  { name: "Mistral", image: "https://www.google.com/s2/favicons?domain=mistral.ai&sz=128", color: "#F97316" },
+  { name: "Cursor", image: "https://www.google.com/s2/favicons?domain=cursor.sh&sz=128", color: "#10B981" },
 ];
 
 export const AIModelFilter = () => {
   return (
-    <section className="w-full">
-      <div className="flex flex-wrap md:flex-nowrap gap-4 md:gap-6 w-full items-center justify-start overflow-x-auto pb-4 scrollbar-hide px-6">
+    <section className="w-full space-y-4 px-6">
+      <h3 className="text-xl md:text-2xl font-bold tracking-tight text-foreground/80 font-mono">
+        Browse by AI Platform
+      </h3>
+      <div className="flex flex-wrap md:flex-nowrap gap-4 md:gap-6 w-full items-center justify-start overflow-x-auto pb-4 scrollbar-hide">
         {models.map((model, i) => (
           <ModelCircle key={model.name} model={model} i={i} />
-        ))}
-        {/* Placeholder circles just like the wireframe for expansion */}
-        {Array(3).fill(0).map((_, i) => (
-          <div key={`empty-${i}`} className="w-14 h-14 md:w-16 md:h-16 shrink-0 rounded-full border border-border/40 bg-card/10 opacity-50" />
         ))}
       </div>
     </section>
