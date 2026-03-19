@@ -64,7 +64,7 @@ export const CategoryGrid = () => {
             transition={{ delay: i * 0.1 }}
             className="group relative h-full cursor-pointer"
           >
-            <div className="h-full p-8 rounded-[2.5rem] bg-card border border-border/60 relative overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 hover:border-primary/40 group">
+            <div className="h-full p-8 rounded-[2.5rem] bg-card border-none relative overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 group">
               {/* Colored Glow Orb */}
               <div 
                 className="absolute -top-20 -right-20 w-48 h-48 rounded-full blur-[80px] opacity-0 group-hover:opacity-20 transition-opacity duration-700 pointer-events-none" 
@@ -73,10 +73,10 @@ export const CategoryGrid = () => {
               
               <div className="space-y-6 relative z-10 flex flex-col h-full">
                 <div 
-                  className="w-16 h-16 rounded-[1.5rem] flex items-center justify-center border transition-all duration-500 shadow-sm group-hover:scale-110 group-hover:rotate-3" 
+                  className="w-16 h-16 rounded-[1.5rem] flex items-center justify-center border-none transition-all duration-500 shadow-sm group-hover:scale-110 group-hover:rotate-3" 
                   style={{ 
                     color: cat.color, 
-                    borderColor: `${cat.color}30`, 
+                    borderColor: "transparent", 
                     backgroundColor: `${cat.color}10` 
                   }}
                 >
@@ -94,7 +94,7 @@ export const CategoryGrid = () => {
               </div>
 
               <div className="absolute bottom-8 right-8 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-4 group-hover:translate-x-0">
-                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center backdrop-blur-md border border-primary/20">
+                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center backdrop-blur-md border-none">
                   <ChevronRight className="w-5 h-5 text-primary" />
                 </div>
               </div>

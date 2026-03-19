@@ -72,20 +72,21 @@ export default function LandingPage() {
       <div className="w-full flex flex-col gap-10 lg:gap-14 py-4">
         
         <PromptRow 
-          title="Image Transformation Prompts" 
+          title="" 
+          subtitle={[]}
           prompts={imageTransformPrompts} 
           href="/explore" 
-          aspectRatio="aspect-[4/5.2]" 
+          aspectRatio="aspect-[2/3]" 
           compact={true}
           hideDetails={true}
         />
 
         <PromptRow 
-          title={<span className="flex items-center gap-2"><Instagram size={24} className="text-primary" /> Instagram Prompts</span>} 
-          subtitle={["Reel", "AI Avatar", "Post"]} 
+          title="" 
+          subtitle={[]} 
           prompts={instagramPrompts} 
           href="/explore" 
-          aspectRatio="aspect-[4/5.2]"
+          aspectRatio="aspect-[2/3]"
           isVideo={true}
           compact={true}
           hideDetails={true}
@@ -105,7 +106,7 @@ export default function LandingPage() {
           title="Youtube Prompts" 
           prompts={youtubePrompts} 
           href="/explore" 
-          aspectRatio="aspect-[16/10]"
+          aspectRatio="aspect-[15/9]"
           isVideo={true}
           hideDetails={true}
         />
@@ -113,7 +114,7 @@ export default function LandingPage() {
         <StackedPromptRow title="" prompts={mixedPrompts} href="/explore" />
 
         <div className="w-full px-4 md:px-8 lg:px-12">
-          <div className="bg-card border border-border/40 rounded-[2.5rem] p-8 md:p-12 space-y-10 relative overflow-hidden transition-all duration-500 shadow-xl group">
+          <div className="bg-card border-none rounded-[2.5rem] p-8 md:p-12 space-y-10 relative overflow-hidden transition-all duration-500 shadow-xl group">
              {/* Subtle Background Glow */}
              <div className="absolute top-0 left-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[140px] pointer-events-none group-hover:bg-primary/10 transition-all duration-700" />
             
@@ -162,7 +163,7 @@ export default function LandingPage() {
         <TopContributors />
         
         <div className="w-full px-4 md:px-8 lg:px-12">
-          <div className="bg-card border border-border/40 rounded-[2.5rem] p-8 md:p-12 space-y-10 relative overflow-hidden transition-all duration-500 shadow-xl group">
+          <div className="bg-card border-none rounded-[2.5rem] p-8 md:p-12 space-y-10 relative overflow-hidden transition-all duration-500 shadow-xl group">
             {/* Subtle Background Glow */}
             <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[140px] pointer-events-none group-hover:bg-primary/10 transition-all duration-700" />
             

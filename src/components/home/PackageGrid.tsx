@@ -46,7 +46,7 @@ const packages = [
 export const PackageGrid = () => {
   return (
     <section className="w-full px-4 md:px-8 lg:px-12">
-      <div className="bg-card border border-border/40 rounded-[2.5rem] p-8 md:p-12 space-y-12 relative overflow-hidden transition-all duration-500 shadow-xl group/main">
+      <div className="bg-card border-none rounded-[2.5rem] p-8 md:p-12 space-y-12 relative overflow-hidden transition-all duration-500 shadow-xl group/main">
         {/* Header Section */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 relative z-10">
           <div className="space-y-2">
@@ -60,7 +60,7 @@ export const PackageGrid = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 relative z-10">
           {packages.map((pkg, i) => (
-            <div key={pkg.title} className="flex flex-col space-y-8 p-8 rounded-[2.5rem] border border-border/40 bg-background/50 hover:bg-background transition-all duration-500 group relative">
+            <div key={pkg.title} className="flex flex-col space-y-8 p-8 rounded-[2.5rem] border-none bg-background/50 hover:bg-background transition-all duration-500 group relative">
                 <div className="flex items-start justify-between">
                   <div className="space-y-1.5">
                     <h3 className="text-xl font-black tracking-tighter text-foreground uppercase">{pkg.title}</h3>
@@ -76,9 +76,9 @@ export const PackageGrid = () => {
                   {pkg.items.map((item, j) => (
                     <div 
                       key={j} 
-                      className="p-5 rounded-[1.8rem] bg-card border border-border/40 hover:border-primary/40 hover:bg-secondary/20 transition-all duration-500 cursor-pointer group/item flex flex-col gap-4 shadow-sm hover:shadow-lg relative overflow-hidden"
+                      className="p-5 rounded-[1.8rem] bg-card border-none hover:bg-secondary/20 transition-all duration-500 cursor-pointer group/item flex flex-col gap-4 shadow-sm hover:shadow-lg relative overflow-hidden"
                     >
-                      <div className="w-12 h-12 rounded-[1.2rem] bg-background flex items-center justify-center text-muted-foreground group-hover/item:text-primary group-hover/item:scale-110 transition-all duration-500 shadow-sm border border-border/20">
+                      <div className="w-12 h-12 rounded-[1.2rem] bg-background flex items-center justify-center text-muted-foreground group-hover/item:text-primary group-hover/item:scale-110 transition-all duration-500 shadow-sm border-none">
                         <item.icon size={22} strokeWidth={2.5} />
                       </div>
                       <div className="space-y-1.5 relative z-10">

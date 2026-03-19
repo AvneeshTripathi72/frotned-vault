@@ -65,10 +65,10 @@ export const TopContributors = () => {
             whileHover={{ y: -8 }}
             className="min-w-[340px] w-96 snap-start group"
           >
-            <div className="p-8 rounded-[3rem] bg-card/40 backdrop-blur-xl border border-border/40 group-hover:border-primary/50 transition-all duration-500 shadow-sm relative overflow-hidden">
+            <div className="p-8 rounded-[3rem] bg-card/40 backdrop-blur-xl border-none transition-all duration-500 shadow-sm relative overflow-hidden">
               <div className="space-y-6 relative z-10">
                 <div className="flex items-center gap-6">
-                  <div className="size-20 rounded-full border border-border/40 bg-secondary/50 flex items-center justify-center relative overflow-hidden group-hover:scale-105 transition-transform duration-500 bg-gradient-to-br from-primary/10 to-transparent">
+                  <div className="size-20 rounded-full border-none bg-secondary/50 flex items-center justify-center relative overflow-hidden group-hover:scale-105 transition-transform duration-500 bg-gradient-to-br from-primary/10 to-transparent">
                      <User size={32} className="text-muted-foreground opacity-30" />
                   </div>
                   <div className="space-y-1">

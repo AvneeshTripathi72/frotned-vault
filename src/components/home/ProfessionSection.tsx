@@ -31,7 +31,7 @@ const professions = [
 export const ProfessionSection = () => {
   return (
     <section className="w-full px-4 md:px-8 lg:px-12">
-      <div className="bg-card border border-border/40 rounded-[2.5rem] p-8 md:p-12 space-y-12 relative overflow-hidden transition-all duration-500 shadow-xl group/main">
+      <div className="bg-card border-none rounded-[2.5rem] p-8 md:p-12 space-y-12 relative overflow-hidden transition-all duration-500 shadow-xl group/main">
         {/* Subtle Background Glow */}
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[140px] pointer-events-none group-hover/main:bg-primary/10 transition-all duration-700" />
         
@@ -56,8 +56,8 @@ export const ProfessionSection = () => {
               className="group cursor-pointer flex flex-col items-center gap-4 w-28 md:w-32"
             >
               {/* The Small Circle Icon */}
-              <div className="size-20 md:size-24 flex items-center justify-center rounded-full border border-border/40 bg-card/50 backdrop-blur-md hover:border-primary/40 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 group-hover:-translate-y-2 relative overflow-hidden group-hover:bg-card">
-                <div className="size-10 md:size-12 rounded-full bg-secondary/40 border border-border/20 flex items-center justify-center text-lg md:text-xl text-muted-foreground group-hover:text-primary group-hover:scale-110 transition-all duration-500 shadow-inner group-hover:shadow-[0_0_15px_rgba(var(--primary-rgb),0.15)] relative z-10">
+              <div className="size-20 md:size-24 flex items-center justify-center rounded-full border-none bg-card/50 backdrop-blur-md transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 group-hover:-translate-y-2 relative overflow-hidden group-hover:bg-card">
+                <div className="size-10 md:size-12 rounded-full bg-secondary/40 border-none flex items-center justify-center text-lg md:text-xl text-muted-foreground group-hover:text-primary group-hover:scale-110 transition-all duration-500 shadow-inner group-hover:shadow-[0_0_15px_rgba(var(--primary-rgb),0.15)] relative z-10">
                   {prof.icon}
                 </div>
                 

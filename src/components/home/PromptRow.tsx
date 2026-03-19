@@ -27,22 +27,28 @@ export const PromptRow = ({ title, subtitle, prompts, href, aspectRatio, isVideo
   return (
     <section className="w-full px-4 sm:px-8 lg:px-12 space-y-4">
       <div className="flex items-end justify-between">
-        <div className="space-y-1">
+        <div className="flex flex-col gap-1">
           <div className="flex items-center gap-4">
             <h2 className="text-2xl md:text-3xl font-black tracking-tight text-foreground flex items-center gap-3">{title}</h2>
-            {subtitle && (
-              <div className="hidden sm:flex items-center gap-2">
-                {subtitle.map((tag) => (
+          </div>
+          {subtitle && (
+            <div className="flex flex-wrap items-center gap-2">
+              {subtitle.map((tag, i) => (
+                tag.length > 20 ? (
+                  <p key={i} className="text-[11px] md:text-[12px] font-medium text-muted-foreground/70 tracking-tight">
+                    {tag}
+                  </p>
+                ) : (
                   <span 
                     key={tag} 
-                    className="text-[9px] font-black uppercase tracking-[0.2em] text-muted-foreground bg-muted/50 px-2.5 py-1 rounded-full border border-border/40"
+                    className="text-[9px] font-black uppercase tracking-[0.2em] text-muted-foreground bg-muted/40 px-2.5 py-1 rounded-full"
                   >
                     {tag}
                   </span>
-                ))}
-              </div>
-            )}
-          </div>
+                )
+              ))}
+            </div>
+          )}
         </div>
       </div>
 

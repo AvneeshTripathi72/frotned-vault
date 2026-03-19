@@ -32,7 +32,7 @@ export const TrendingDashboard = ({ prompts = [] }: { prompts?: any[] }) => {
 
   return (
     <section className="w-full px-4 md:px-8 lg:px-12 py-8">
-      <div className="bg-card border border-border/40 rounded-[2.5rem] p-8 md:p-12 space-y-10 relative overflow-hidden transition-all duration-500 shadow-xl group">
+      <div className="bg-card border-none rounded-[2.5rem] p-8 md:p-12 space-y-10 relative overflow-hidden transition-all duration-500 shadow-xl group">
         {/* Subtle Background Glow - Theme Aware */}
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[140px] pointer-events-none group-hover:bg-primary/10 transition-all duration-700" />
         
