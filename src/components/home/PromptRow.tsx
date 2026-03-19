@@ -18,7 +18,7 @@ interface PromptRowProps {
 
 export const PromptRow = ({ title, subtitle, prompts, href, aspectRatio, isVideo, isCode }: PromptRowProps) => {
   return (
-    <section className="w-full px-4 sm:px-8 lg:px-12 space-y-6">
+    <section className="w-full px-4 sm:px-8 lg:px-12 space-y-4">
       <div className="flex items-end justify-between">
         <div className="space-y-1">
           <div className="flex items-center gap-4">
@@ -37,16 +37,9 @@ export const PromptRow = ({ title, subtitle, prompts, href, aspectRatio, isVideo
             )}
           </div>
         </div>
-        
-        <Link 
-          href={href} 
-          className="flex items-center gap-1.5 text-primary text-[10px] font-black uppercase tracking-[0.2em] hover:gap-3 transition-all duration-300 group"
-        >
-          See more <ChevronRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
-        </Link>
       </div>
 
-      <div className="flex gap-4 md:gap-5 overflow-x-auto pb-6 -mx-4 px-4 sm:-mx-8 sm:px-8 lg:-mx-12 lg:px-12 scrollbar-hide snap-x snap-mandatory">
+      <div className="flex gap-4 md:gap-5 overflow-x-auto pb-6 -mx-4 px-4 sm:-mx-8 sm:px-8 lg:-mx-12 lg:px-12 scrollbar-hide snap-x snap-mandatory items-stretch relative">
         {prompts.map((prompt, index) => (
           <div 
             key={prompt.id || index} 
@@ -68,6 +61,16 @@ export const PromptRow = ({ title, subtitle, prompts, href, aspectRatio, isVideo
              />
           </div>
         ))}
+
+        {/* See More Link placed at the end of the row track matching wireframe */}
+        <div className="shrink-0 snap-end flex items-center justify-center min-w-[100px] pr-8">
+           <Link 
+            href={href} 
+            className="flex items-center gap-2 text-foreground/80 hover:text-primary text-sm font-bold tracking-wider group transition-all"
+           >
+             See more <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+           </Link>
+        </div>
       </div>
     </section>
   );

@@ -69,29 +69,23 @@ export default function LandingPage() {
     <div className="w-full min-h-screen bg-background overflow-x-hidden pb-16 flex flex-col gap-16 max-w-[1920px] mx-auto">
       
       {/* PAGE 1 CONTENT */}
-      <div className="w-full grid grid-cols-1 xl:grid-cols-2 items-start py-4">
+      <div className="w-full flex flex-col gap-10 lg:gap-14 py-4">
         
-        {/* Left Column: Image Transformation */}
-        <div className="w-full overflow-hidden">
-          <PromptRow 
-            title="Image Transformation Prompts" 
-            prompts={imageTransformPrompts} 
-            href="/explore" 
-            aspectRatio="aspect-[9/16]" 
-          />
-        </div>
+        <PromptRow 
+          title="Image Transformation Prompts" 
+          prompts={imageTransformPrompts} 
+          href="/explore" 
+          aspectRatio="aspect-[9/16]" 
+        />
 
-        {/* Right Column: Instagram Prompts */}
-        <div className="w-full overflow-hidden">
-          <PromptRow 
-            title={<span className="flex items-center gap-2"><Instagram size={24} className="text-primary" /> Instagram Prompts</span>} 
-            subtitle={["Reel", "AI Avatar", "Post"]} 
-            prompts={instagramPrompts} 
-            href="/explore" 
-            aspectRatio="aspect-[9/16]"
-            isVideo={true}
-          />
-        </div>
+        <PromptRow 
+          title={<span className="flex items-center gap-2"><Instagram size={24} className="text-primary" /> Instagram Prompts</span>} 
+          subtitle={["Reel", "AI Avatar", "Post"]} 
+          prompts={instagramPrompts} 
+          href="/explore" 
+          aspectRatio="aspect-[9/16]"
+          isVideo={true}
+        />
 
       </div>
 
