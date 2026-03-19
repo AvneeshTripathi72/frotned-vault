@@ -20,16 +20,16 @@ export const HomeFooter = () => {
 
   return (
     <footer className="w-full bg-background pt-16 pb-8 border-t border-border/40 shrink-0 mt-8">
-      <div className="w-full px-6 md:px-12 lg:px-24 space-y-16 max-w-none">
+      <div className="w-full px-6 md:px-12 lg:px-24 flex flex-col gap-12 max-w-[1920px] mx-auto">
         
         {/* Top: 5 Columns of Links */}
-        <div className="grid grid-cols-2 lg:grid-cols-5 gap-10">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 lg:gap-12">
           {columns.map((col) => (
-             <div key={col.title} className="space-y-4">
-               <h4 className="text-[11px] font-bold text-foreground/80 tracking-[0.05em] uppercase">{col.title}</h4>
+             <div key={col.title} className="space-y-5">
+               <h4 className="text-xs font-black text-foreground/90 tracking-widest uppercase">{col.title}</h4>
                <div className="flex flex-col gap-3">
                  {col.links.map((link) => (
-                   <Link key={link} href="#" className="text-xs md:text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+                   <Link key={link} href="#" className="text-[13px] font-medium text-muted-foreground hover:text-primary transition-colors">
                      {link}
                    </Link>
                  ))}
@@ -38,31 +38,35 @@ export const HomeFooter = () => {
           ))}
         </div>
 
-        {/* Middle: SEO Links */}
-        <div className="flex flex-wrap items-center gap-x-12 gap-y-4">
+        {/* Divider */}
+        <div className="w-full h-px bg-border/40" />
+
+        {/* Middle: SEO Links & Secondary Info */}
+        <div className="flex flex-wrap items-center gap-x-8 gap-y-3">
+          <span className="text-[11px] font-bold uppercase tracking-widest text-foreground/50 hidden md:block">Top Searches:</span>
           {seoLinks.map((link) => (
             <Link 
               key={link} 
               href="#" 
-              className="text-xs md:text-sm font-semibold text-muted-foreground/80 hover:text-foreground transition-colors"
+              className="text-[13px] font-medium text-muted-foreground hover:text-foreground transition-colors"
             >
               {link}
             </Link>
           ))}
         </div>
 
-        {/* Bottom: Massive Brand & Legal Links */}
-        <div className="flex flex-col lg:flex-row items-start lg:items-end justify-between gap-12 pt-8">
-          <h1 className="text-6xl md:text-[8rem] lg:text-[12rem] font-black tracking-tighter leading-none text-foreground">
+        {/* Bottom: Brand & Legal Links */}
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-8 pt-6">
+          <h1 className="text-6xl md:text-[6rem] lg:text-[7rem] font-black tracking-tighter leading-none text-foreground">
             NORAG
           </h1>
           
-          <div className="flex flex-wrap items-center gap-8 pb-2 lg:pb-8">
+          <div className="flex flex-wrap items-center justify-center lg:justify-end gap-x-8 gap-y-4">
             {["About", "Contact", "Privacy", "Terms"].map((link) => (
                <Link 
                  key={link} 
                  href="#" 
-                 className="text-xs md:text-sm font-bold tracking-wide text-muted-foreground hover:text-foreground transition-colors uppercase"
+                 className="text-[11px] font-bold tracking-[0.1em] text-muted-foreground hover:text-foreground transition-colors uppercase"
                >
                  {link}
                </Link>

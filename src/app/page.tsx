@@ -43,15 +43,15 @@ export default function LandingPage() {
   // Mock data for structured sections
   const imageTransformPrompts = prompts.length >= 12 ? prompts.slice(0, 12) : Array(12).fill({ 
     title: "Realistic Portrait FX", tagline: "Ultra-detailed skin and lighting", price: 299, rating: 4.8, platform: "Midjourney", seller: "Visionary" 
-  });
+  }).map((p, i) => ({ ...p, title: `${p.title} v${i + 1}` }));
   
-  const instagramPrompts = prompts.length >= 12 ? prompts.slice(0, 12) : Array(12).fill({ 
+  const instagramPrompts = prompts.length >= 12 ? [...prompts].reverse().slice(0, 12) : Array(12).fill({ 
     title: "Viral Aesthetic Reel", tagline: "High-engagement visual storytelling", price: 199, rating: 4.9, platform: "Stable Diffusion", seller: "Creatorhub" 
-  });
+  }).map((p, i) => ({ ...p, title: `${p.title} v${i + 1}` }));
   
-  const youtubePrompts = prompts.length >= 12 ? prompts.slice(0, 12) : Array(12).fill({ 
+  const youtubePrompts = prompts.length >= 12 ? [...prompts].sort(() => 0.5 - Math.random()).slice(0, 12) : Array(12).fill({ 
     title: "Hook Gen Title Boost", tagline: "Maximum CTR title and description gen", price: 149, rating: 4.7, platform: "ChatGPT 4", seller: "TubeMaster" 
-  });
+  }).map((p, i) => ({ ...p, title: `${p.title} v${i + 1}` }));
 
   const mixedPrompts = Array(12).fill({ 
     title: "Strategic Asset Architect", tagline: "High-level content engineering", price: 249, rating: 4.8, platform: "Claude 3", seller: "Strategist" 
