@@ -41,19 +41,19 @@ export default function LandingPage() {
   }, []);
 
   // Mock data for structured sections
-  const imageTransformPrompts = prompts.length > 0 ? prompts.slice(0, 5) : Array(5).fill({ 
+  const imageTransformPrompts = prompts.length >= 12 ? prompts.slice(0, 12) : Array(12).fill({ 
     title: "Realistic Portrait FX", tagline: "Ultra-detailed skin and lighting", price: 299, rating: 4.8, platform: "Midjourney", seller: "Visionary" 
   });
   
-  const instagramPrompts = prompts.length > 0 ? prompts.slice(0, 5) : Array(5).fill({ 
+  const instagramPrompts = prompts.length >= 12 ? prompts.slice(0, 12) : Array(12).fill({ 
     title: "Viral Aesthetic Reel", tagline: "High-engagement visual storytelling", price: 199, rating: 4.9, platform: "Stable Diffusion", seller: "Creatorhub" 
   });
   
-  const youtubePrompts = prompts.length > 0 ? prompts.slice(0, 4) : Array(4).fill({ 
+  const youtubePrompts = prompts.length >= 12 ? prompts.slice(0, 12) : Array(12).fill({ 
     title: "Hook Gen Title Boost", tagline: "Maximum CTR title and description gen", price: 149, rating: 4.7, platform: "ChatGPT 4", seller: "TubeMaster" 
   });
 
-  const mixedPrompts = Array(5).fill({ 
+  const mixedPrompts = Array(12).fill({ 
     title: "Strategic Asset Architect", tagline: "High-level content engineering", price: 249, rating: 4.8, platform: "Claude 3", seller: "Strategist" 
   }).map((p, i) => ({
     ...p,
@@ -61,7 +61,7 @@ export default function LandingPage() {
     tagline: i % 2 === 0 ? "LinkedIn Prompt" : "SEO Prompt",
   }));
 
-  const softwareDevPrompts = Array(4).fill({ 
+  const softwareDevPrompts = Array(12).fill({ 
     title: "Bug Sniper Pro", tagline: "Advanced debugging and logic fixes", price: 349, rating: 4.9, platform: "GitHub Copilot", seller: "DevOpsElite" 
   });
 

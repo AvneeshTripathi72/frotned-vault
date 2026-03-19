@@ -18,11 +18,11 @@ interface PromptRowProps {
 
 export const PromptRow = ({ title, subtitle, prompts, href, aspectRatio, isVideo, isCode }: PromptRowProps) => {
   return (
-    <section className="container mx-auto px-6 space-y-8">
+    <section className="w-full px-4 sm:px-8 lg:px-12 space-y-6">
       <div className="flex items-end justify-between">
         <div className="space-y-1">
           <div className="flex items-center gap-4">
-            <h2 className="text-3xl font-black tracking-tight text-foreground flex items-center gap-3">{title}</h2>
+            <h2 className="text-2xl md:text-3xl font-black tracking-tight text-foreground flex items-center gap-3">{title}</h2>
             {subtitle && (
               <div className="hidden sm:flex items-center gap-2">
                 {subtitle.map((tag) => (
@@ -36,7 +36,6 @@ export const PromptRow = ({ title, subtitle, prompts, href, aspectRatio, isVideo
               </div>
             )}
           </div>
-          <div className="h-1 w-12 bg-primary rounded-full opacity-50 transition-all duration-500 hover:w-24" />
         </div>
         
         <Link 
@@ -47,15 +46,11 @@ export const PromptRow = ({ title, subtitle, prompts, href, aspectRatio, isVideo
         </Link>
       </div>
 
-      <div className="flex gap-6 overflow-x-auto pb-4 -mx-6 px-6 scrollbar-hide snap-x snap-mandatory">
+      <div className="flex gap-4 md:gap-6 overflow-x-auto pb-6 -mx-4 px-4 sm:-mx-8 sm:px-8 lg:-mx-12 lg:px-12 scrollbar-hide snap-x snap-mandatory">
         {prompts.map((prompt, index) => (
-          <motion.div 
+          <div 
             key={prompt.id || index} 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
-            className={`min-w-[280px] w-72 md:min-w-[320px] md:w-80 snap-start shrink-0`}
+            className="min-w-[200px] w-[200px] sm:min-w-[220px] sm:w-[220px] md:min-w-[240px] md:w-[240px] lg:min-w-[260px] lg:w-[260px] xl:min-w-[15.5vw] xl:w-[15.5vw] snap-start shrink-0"
           >
              <PromptCard 
                 id={prompt.id || prompt._id}
@@ -64,14 +59,14 @@ export const PromptRow = ({ title, subtitle, prompts, href, aspectRatio, isVideo
                 price={prompt.price}
                 rating={prompt.rating}
                 platform={prompt.platform}
-                author={prompt.author || { username: prompt.seller, avatar: "" }}
+                author={prompt.author || { username: prompt.seller || "anon", avatar: "" }}
                 previewImage={prompt.images?.[0] || ""}
                 promptPreview={prompt.promptText || ""}
                 aspectRatio={aspectRatio}
                 isVideo={isVideo}
                 isCode={isCode}
              />
-          </motion.div>
+          </div>
         ))}
       </div>
     </section>
